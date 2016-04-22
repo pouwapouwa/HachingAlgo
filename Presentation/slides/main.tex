@@ -6,6 +6,10 @@
 %
 
 \usepackage[french]{babel}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usepackage{color}
 
 % Highlight macros
 \newcommand{\highlight}[1]{\textcolor{structure.fg}{\bfseries #1}}
@@ -39,6 +43,96 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%[ Introduction ]%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+%TODO slide definition avec schema fonction de hashage
+\begin{frame}[fragile]
+  \frametitle{Définition: fonction de hashage}
+
+Une fonction de hashage est une application qui associe à un ensemble de départ infini $\{0,1\}^*$ un ensemble d'arrivée fini  $\{0,1\}^n$ constitué de chaînes de bits de taille n.
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Propriétés requises}
+  \vfill
+  \begin{itemize}
+  \item \textbf{Résistance à la Pré-image}: Pour un hash $y$ donné, il est dur de trouver une pré-image $x \in f^{-1}(H)$ tel que $y = H(x)$.
+  \item \textbf{Résistance à la Seconde Pré-image}: Pour un clair $x$, il est dur de trouver un autre clair $x',\ x'\neq x$ tel que $H(x) = H(x')$.
+  \item \textbf{Résistance aux Collisions}: Il est dur de trouver 2 messages clairs $x$ et $x'$ avec $x \neq x'$ tel que $H(x) = H(x')$.
+  \end{itemize}
+  \vspace{0.8cm}
+  Résistance aux collisions $\Rightarrow$ Résistance à la seconde pré-image $\Rightarrow$ Résistance à la première pré-image
+  \vfill
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Padding}
+  \vfill
+  \begin{itemize}
+  \item \textbf{Padding Simple}: Représenté par $10*$, il faut rajouter un $1$, puis un nombre fini de $0$, de telle sorte que la longueur du resultat soit un multiple de le taille des blocks que l'on doit utiliser.
+  \end{itemize}
+  \vfill
+  \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[scale=1]
+    
+         \draw [name=green, fill=red!70!grey, line width=2pt] (0,0) rectangle (4,0.4);
+         \draw [fill=green!80, line width=2pt] (4,0) rectangle (4.3,0.4);
+         \draw [fill=green!80, line width=2pt] (4.3,0) rectangle (6.3,0.4);
+
+         \node [align=center] at (2,0.2){\textbf{M}};
+         \node [align=center] at (4.15,0.2){\textbf{1}};
+         \node [align=left]   at (4.8,0.2){\textbf{00}$\ldots$};
+    
+        \draw [<->, >=latex, line width=1pt, color=red!70!grey] (0,-0.2) -- (4,-0.2);
+        \draw [<->, >=latex, line width=1pt, color=grey] (0,-1) -- (6.3,-1);
+
+        \node [align=center, color=red!70!grey] at (2,-0.5){$\vert$ \textbf{M} $\vert$};
+        \node [align=center, color=grey] at (3,-1.3){\textbf{Multiple of r\ bits}};
+    
+  \end{tikzpicture}
+  \caption{\label{fig:SimplePadding}Simple padding.}
+\end{figure}
+\vfill
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Padding}
+  \vfill
+  \begin{itemize}
+  \item \textbf{Merkle-Damg\r{a}rd Padding}: Représenté par $10*1|M|$, il faut rajouter un $1$, puis un nombre fini de $0$, de telle sorte que la longueur du resultat soit congru à $448$ mod $512$. Ensuite, on y ajoute la longueur du message, sur $64$ bits.
+  \end{itemize}
+  \vfill
+  \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[scale=1.2]
+    
+        \draw [name=green, fill=red!70!grey, line width=2pt] (0,0) rectangle (4,0.4);
+        \draw [fill=green!80, line width=2pt] (4,0) rectangle (4.3,0.4);
+        \draw [fill=green!80, line width=2pt] (4.3,0) rectangle (6.3,0.4);
+        \draw [fill=cyan!50!blue, line width=2pt] (6.3,0) rectangle (7.9,0.4);
+
+        \node [align=center] at (2,0.2){\textbf{M$_{k-1}$}};
+        \node [align=center] at (4.15,0.2){\textbf{1}};
+        \node [align=left]   at (4.8,0.2){\textbf{00}$\ldots$};
+        \node [align=center] at (7.1,0.15){$\vert \textbf{M}\vert $};
+    
+        \draw [<->, >=latex, line width=1pt, color=red!70!grey] (0,-0.2) -- (4,-0.2);
+        \draw [<->, >=latex, line width=1pt, color=green!80] (0,0.7) -- (6.3,0.7);
+        \draw [<->, >=latex, line width=1pt, color=grey] (0,-1) -- (7.9,-1);
+        \draw [<->, >=latex, line width=1pt, color=cyan!50!blue] (6.3,-0.2) -- (7.9,-0.2);
+
+        \node [align=center, color=red!70!grey] at (2,-0.5){$\vert$ \textbf{M$_{k-1}$} $\vert$};
+        \node [align=center, color=green!80] at (3.15,1){\textbf{448\ mod\ 512}};
+        \node [align=center, color=grey] at (4,-1.3){\textbf{512\ bits}};
+        \node [align=center, color=cyan!50!blue] at (7.1,-0.5){\textbf{64\ bits}};
+    
+        \end{tikzpicture}
+    \caption{\label{fig:MDPadding}Merkle-Damg\r{a}rd padding.}
+    \end{figure}
+\vfill
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Merkle-Damg\r{a}rd et ses applications}
 
@@ -48,39 +142,31 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Internet est attaqué !!!}
-\vspace{-.25em}
-{\footnotesize
-\begin{verbatim}
-Newsgroups: comp.risks
-Subject: Virus on the Arpanet - Milnet
-<Stoll@DOCKMASTER.ARPA> Thu, 3 Nov 88 06:46 EST
-
-Hi Gang!
-
-It's now 3:45 AM on Wednesday 3 November 1988. I'm tired, so don't
-believe everything that follows... Apparently, there is a massive
-attack on Unix systems going on right now.
-
-I have spoken to systems managers at several computers, on both the
-east & west coast, and I suspect this may be a system wide problem.
-Symptom: hundreds or thousands of jobs start running on a Unix system
-bringing response to zero.
-
-[...]
-
-This virus is spreading very quickly over the Milnet. Within the past
-4 hours, I have evidence that it has hit >10 sites across the country,
-both Arpanet and Milnet sites. I suspect that well over 50 sites have
-been hit. Most of these are "major" sites and gateways.
-
-[...]
-
-This is bad news.
-\end{verbatim}}
+  \frametitle{Construction de Merkle-Damg\r{a}rd}
+  
+  La construction de Merkle-Damg\r{a}rd permet de définir des fonctions de hachage en itérant des fonctions de compression.
+  \begin{itemize}
+  \item{Une fonction de compression part d'un ensemble fini vers un ensemble fini.}
+  \item{Une fonction de hachage part d'un ensemble infini vers un ensemble fini.}
+  \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Construction de Merkle-Damg\r{a}rd}
+  % SCHEMA %
+  \begin{itemize}
+\item{Théorème: Si la fonction de compression $h$ utilisée par la fonction de hachage $H$ l'est aussi.} 
+  \end{itemize}
+\end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Applications}
+  % SCHEMA ? %
+  \begin{itemize}
+  \item{SHA1}
+  \item{MD5} 
+  \end{itemize}
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Faiblesse de Merkle-Damg\r{a}rd}
 
