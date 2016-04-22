@@ -31,3 +31,9 @@ Some weaknesses appear to be inherent to the Merkle-Damg\r{a}rd construction and
 In order to provide resiliance against Merkle-Damg\r{a}rd construction weaknesses and future advances in hash function analysis, the NIST organised a public \textsc{SHA-3} Cryptographic Hash Algorithm Competition, in pursuance of a new family of cryptographic hash functions, which rely on fundamentally different design principles to the Merkle-Damg\r{a}rd construction.
 
 The selected winner of the \textsc{SHA-3} competition is based on a construction called the \emph{sponge construction}, which is defined in Chapter~\ref{chap:Sponge}. Due to the particular properties of the sponge construction, as well as defining four new cryptographic hash functions, the standard approves two \emph{extendable output functions}. They are the first such functions the NIST has standardized.
+
+
+All the algorithms studied in this paper (MD5, SHA-1 and SHA3-224) have been implemented with a view to improve our understanding of the algorithms.
+The code is available on our GitHub repository~\cite{GitLove}.
+
+We also compare performance of our implementations that of to inbuilt hashing algorithms that are available from GNU coreutils (MD5 and SHA-1) and the Perl module Digest::SHA3. Performances related to algorithms SHA-1 and MD5 are comparable, however our implementation of SHA3-224 is over three times more efficient than the Perl module!  
