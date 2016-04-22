@@ -1,4 +1,4 @@
-\chapter{Cryptographic Security And Known Attacks}
+\chapter{Cryptographic Security And Known Attacks}~\label{chap:security}
 %\chapter{Near-Collision Attack}
  %INTRODUCTION  --> TODO Birthday Attack + General Attack
 %TODO 
@@ -15,19 +15,19 @@ It can be compared to trying many random combinations on a padlock, in which cas
 
 Thus, a brute force attack to find collisions for a hash function $H$ will try many random pairs of messages $ (x,x')$ until finding a pair satisfying $x\ne x' $ and $H(x) = H(x')$.
 
-The birthday paradox described bellow provides an estimate of a brute force attack's time complexity, and demonstrates that surprisingly, it doesn't take that many random guesses to get \emph{lucky}. We shall then apply this result to the specific case of finding collisions to hash functions.
+The birthday paradox described bellow provides an estimate of a brute force attack's time complexity, and demonstrates that surprisingly, it doesn't take that many random guesses to get \emph{lucky}. We shall then apply this result to the specific case of finding collisions for hash functions.
 
 \subsection{The Birthday Paradox}
 The birthday paradox is a probability argument, referred to as a paradox as it is counter-intuitive.
 The idea is that, even though there are 365 days in a year, within a group of 23 or more people the probability of two individuals having the same birthday is higher than $\frac{1}{2}$.
 
-Formally, let us take a group of $k$ individuals, over a period of $n$ days, an let us assume all days are equiprobable as birthdays.
+Formally, let us take a group of $k$ individuals, over a period of $n$ days, and let us assume all days are equiprobable as birthdays.
 The number of combinations of $k$ different birthdays is $A_n^k=\frac{n!}{n-k!}$. Therefore each individual will have a different birthday with probability $\frac{A_n^k}{n^k}$.
 
 The probability that two people at least will have their birthday on the same day is $$1-\frac{A_n^k}{n^k} \approx 1 - e^{-\frac{k^2}{2 \times n}}$$
 This approximation will be justified in Section~\ref{sec:birthday_application}.
 
-Numerically if $k=23$ and $n=365$, the likelyhood two individuals will have their birthday the same day is over 50\%, which is where the name \emph{birthday paradox} comes from. t comes as quite a surprise as we are far from having half as many people as there are days in a year. 
+Numerically if $k=23$ and $n=365$, the likelyhood two individuals will have their birthday the same day is over 50\%, which is where the name \emph{birthday paradox} comes from. It comes as quite a surprise as we are far from having half as many people as there are days in a year. 
 And with a group of 70 people the success probability of this attack increases to 99.9\%!
 
 \subsection{Application To Hashing Functions}~\label{sec:birthday_application}
@@ -52,9 +52,9 @@ Algorithm~\ref{algo:collision} lays out the Yuval attack. The algorithm first cr
  \end{algorithmic}
 \end{algorithm}
 
-We whish to estimate $k$, the number of random messages to try, in order to obtain a success probability of finding a collision greater than $\frac{1}{2}$, using Algorithm~\ref{algo:collision}.
+We wish to estimate $k$, the number of random messages to try, in order to obtain a success probability of finding a collision greater than $\frac{1}{2}$, using Algorithm~\ref{algo:collision}.
 
-In order to measure $H$'s resistance to the Yuval attack, we need to express $k$ as a function of $\#  \mathcal{F} $. In order to do this, let us first evaluate the success probability of Algorithm~\ref{algo:collision}.
+To measure $H$'s resistance to the Yuval attack, we need to express $k$ as a function of $\#  \mathcal{F} $. In order to do this, let us first evaluate the success probability of Algorithm~\ref{algo:collision}.
 
 We shall denote
 \begin{itemize}
@@ -70,7 +70,7 @@ We shall denote
 \begin{proof}
   In order to prove this theorem, we accept as true that if $H$ is chosen randomly, then $P\lbrack H (x) = y \rbrack = \frac{1}{a}$ for all $x \in  \mathcal{E}$ and all $y \in  \mathcal{F}$.
 
-  Let $\mathcal{M} = \{x_1,x_2,\cdots x_k\}$. And let $E_i$ be the event $''H(x_i) \notin \{H(x_1),h(x_2) \cdots H(x_{i-1})\}''$. Therefore the probability that the algorithm finds no collisions is given by the probability that $\forall i \in \llbracket 1,k \rrbracket$, $E_i$ is true. 
+  Let $\mathcal{M} = \{x_1,x_2,\cdots x_k\}$. And let $E_i$ be the event $''H(x_i) \notin \{H(x_1),H(x_2) \cdots H(x_{i-1})\}''$. Therefore the probability that the algorithm finds no collisions is given by the probability that $\forall i \in \llbracket 1,k \rrbracket$, $E_i$ is true. 
 
   We have
 \begin{equation}
@@ -149,11 +149,11 @@ We can thus easily deduce the complexity of Yuval's attack, executed without any
   
 \item \textbf{SHA-1} and \textbf{SHA-0} have an output sizes of 160 bits, the Yuval attack will require over $2^{80}$ hashes.
   
-With the previously described setup, this would take $\frac{2^{80}}{115840 \times 10^6}  \approx 330929 \mbox{ years}$
+With the previously described setup, this would take over $\frac{2^{80}}{115840 \times 10^6}  \approx 330929 \mbox{ years}$
 
 \item The \textbf{SHA-2} and \textbf{SHA-3} families of hash functions have output sizes that vary between 224 bits and 512 bits, and will therefore require $2^{112}$ to $2^{256}$ hash calculations.
 
-  With the previously described setup, for an output of 224 bits, the Yuval attack would take $1.4\times 10^{15}$ years, and an output of 512 bits would take $7.4 \times 10^{48}$ years to reach a success probability of 50\%. 
+  With the previously described setup, for an output of 224 bits, the Yuval attack would take over $1.4\times 10^{15}$ years, and an output of 512 bits would take over $7.4 \times 10^{48}$ years to reach a success probability of 50\%. 
 \end{itemize}
 
 In light of these results, the Yuval attack provides a lower bound to the size of the digest for a hashing algorithm to be secure. In practice a 160-bit (or larger) message digest is recommended.

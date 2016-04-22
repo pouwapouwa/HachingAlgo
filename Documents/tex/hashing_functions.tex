@@ -7,7 +7,7 @@ They are used for authentification, integrity checking, encryption and digital s
 
 %Mathematical Purpose:
 For many reasons, hash functions need to be one-way functions.
-Ideally, each digest output by a hash function would match with single input message. This would guarantee the source message is the one we really expect, and that no different message could have been sent resulting in the same digest.
+Ideally, each digest output by a hash function would match with a single input message. This would guarantee the source message is the one we really expect, and that no different message could have been sent resulting in the same digest.
 
 However in practice, such a property is not feasible, as hashing functions also guarantee a compression property, mapping an infinite starting set to a finite codomain.
 Hash functions must therefore attempt, as far as possible, to avoid what are called collisions (two messages resulting in the same hash).
@@ -16,7 +16,7 @@ Moreover it is important that one cannot retrieve the original message, using on
 If it were possible, the hash function would be useless, a malicious individual could compute a message resulting in a given hash, enabling him to send a different message than the one initially intended but using the same digest, and therefore the hash function would no longer guarantee a message's authenticity. For these reasons one-way hash functions need to respect various properties.
 
 %Merkle-Damgard
-To guarantee all these properties, it is often safest to ensure hashing functions respect established patterns to be fully efficient. Here, we will work on hash functions based on the Merkle-Damg\r{a}rd construction. %To built our digest, original message need to be expanded. 
+To guarantee all these properties, it is often safest to ensure hashing functions follow established patterns to be fully efficient. Here, we will study hash functions based on the Merkle-Damg\r{a}rd construction. 
 
 
 \section{Cryptographic Requirements Of A Hash Function}~\label{sec:requirements}
@@ -34,7 +34,7 @@ If y is such that $y = H(x)$, then x is a \emph{pre-image} for y (y being the \e
 \end{defn}
 
 \begin{defn}~\label{def:sec_prop}
-Hereafter are the three main properties a cryptographic hash function must fulfil:
+Hereafter are the three main properties a cryptographic hash function must fulfill:
 \begin{itemize}
 \item \textbf{Pre-image resistance}:  given $y$, it is hard to find a pre-image $x \in f^{-1}(H)$ such that $y = H(x)$.
 \item \textbf{Second pre-image resistance}: given $x$, it is hard to find $x' \ne x$ such that $H(x) = H(x')$.
@@ -88,7 +88,7 @@ as depicted in figure~\ref{fig:compression}.
 Input values for the Merkle-Damg\r{a}rd construction are an n-bit IV (\emph{Initial Value}) and the arbitrary length input message. 
 The IV is a fixed public value.
 
-First the message $M$ is padded such that the entire padded message length be a multiple of the message block length b. The padded message is then separated into blocs of size exactly $b$ bits: $M_0,\ldots,M_{k-1}$.
+First the message $M$ is padded so that the entire padded message length be a multiple of the message block length b. The padded message is then separated into blocs of size exactly $b$ bits: $M_0,\ldots,M_{k-1}$.
 
 The compression function h is then iterated according to the model depicted in figure~\ref{fig:constructionMD}.
 

@@ -1,6 +1,7 @@
 \section{SHA-1}
-\textsc{SHA-1} was published in 1995 by the NIST as a standard.
-The message $M$ is padded, then split into $n$ blocs $M_1, M_2, {\ldots} ,M_n$ that are each $b=512$ bits long.
+\textsc{SHA-1} was published in 1995 by the NIST as a standard, it is another hash algorithm, based on the Merkle-Damg\r{a}rd construction, which is widely implemented, though is deprecated as it is also considered cryptographically broken (see Chapter~\ref{chap:security}). It is still used due to legacy systems that do not have the support for SHA-2 or SHA-3.
+
+SHA-1 pads the input message $M$, then splits it into $n$ blocs $M_1, M_2, {\ldots} ,M_n$ that are each $b=512$ bits long.
 We shall focus here on the operations performed on a bloc $M_i$.
 The compression function takes as an input a $512$-bit long message block and produces a $160$ bit long digest.
 
@@ -88,14 +89,14 @@ The pseudo-code for the SHA-1 algorithm is presented in Algorithm~\ref{algo:sha1
 \State{\textbf{external procedures} SHA-1-\textsc{pad}}
 \State{\textbf{global variables} $K_0, {\ldots},K_{79}$}
 \State{$y \gets$ SHA-1-\textsc{pad} (x)}
-\State{let us call $y = M_1 \vert \vert M_2 \vert \vert \ldots \vert \vert M_N$, where each  $M_i$ is a 512-bit block.}
+\State{Define $y = M_1 \vert \vert M_2 \vert \vert \ldots \vert \vert M_N$, where each  $M_i$ is a 512-bit block.}
 \State{$H_0 \gets \mbox{0x67452301}$}
 \State{$H_1 \gets \mbox{0xefcdab89}$}
 \State{$H_2 \gets \mbox{0x98badcfe}$}
 \State{$H_3 \gets \mbox{0x10325476}$}
 \State{$H_4 \gets \mbox{0xc3d2e1f0}$}
 \For{$i \gets 1$ to $N$ }
-\State{let us call $M_i = W_0 \vert \vert W_1 \vert \vert \ldots \vert \vert W_{15}$, where each $W_j$ is a 32-bit word.}
+\State{Define $M_i = W_0 \vert \vert W_1 \vert \vert \ldots \vert \vert W_{15}$, where each $W_j$ is a 32-bit word.}
 
 \For{$t \gets 16$ to $79$ }
 \State{$W_t \gets RL(W_{t-3}\oplus W_{t-8}\oplus W_{t-14}\oplus W_{t-16}, 1)$}

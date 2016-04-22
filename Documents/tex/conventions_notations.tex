@@ -14,6 +14,14 @@ Let us introduce notations that will be kept all along the report:
 
 \section{Padding Rules}\label{section:padding}
 
+As we will see later on, in Section~\ref{sec:MerkleDamg}, hashing functions are iterated compression functions, which are applied to fixed length bit strings.
+Seeing as the input of a hash function can be a message of any length,
+it needs to be split into a number of sub-messages, called blocks, of a given length, so that the compression function can be applied to each block.
+
+Of course the length of the message is not always an exact multiple of the required block length. 
+In order to deal with this length problem, the input message is padded, so as to obtain the required length.
+Note that the choice of the padding rule is extremely important as a poor choice may render the hashing algorithm cryptographically insecure.
+
 \begin{defn} \emph{Simple padding}, denoted by pad10∗, appends a single bit 1 followed by the minimum number of bits 0 such that the length of the result is a multiple of the block length.
 Simple padding appends at least 1 bit and at most the number of bits in a block. 
 \end{defn}
@@ -74,7 +82,7 @@ For alternative hashing functions based on the sponge construction, as defined i
 $$\forall n \ge 0\mbox{, } \forall M, M' ∈ \mathbb Z_2^* \mbox{: } M \ne M′ \Rightarrow \mbox{ }M\vert \vert pad \lbrack r\rbrack(\vert M\vert ) \ne M'\vert \vert pad\lbrack r \rbrack (\vert M'\vert )\vert \vert 0^{nr}$$
 \end{defn}
 
-\emph{Simple padding} the simplest padding rule that is sponge-compliant. The simplest padding rule that allows securely using the same f with different rates is the following:
+\emph{Simple padding} is the simplest padding rule that is sponge-compliant. The simplest padding rule that allows securely using the same f with different rates is the following:
 \begin{defn} \emph{Multi-rate} padding, denoted by pad10∗1, appends a single bit 1 followed by the minimum number of bits 0 followed by a single bit 1 such that the length of the result is a multiple of the block length.
 Clearly, this padding rule is sponge-compliant as well as it is injective and cannot result in an empty string or a string with all-zero last block. Multi-rate padding appends at least 2 bits and at most the number of bits in a block plus one.
 \end{defn}

@@ -38,7 +38,7 @@ A finite-length output can be obtained by truncating it to its $l$ first bits. W
 
 The transformation or permutation $f$ operates on a fixed number of bits, the \textbf{width $b$}. The sponge construction has a \textbf{state} of $b$ bits. 
 
-First, all the bits of the state are initialized to zero. The input message is padded and cut into $r$-bits blocks. Then it proceeds in two phases: the \emph{absorbing phase} followed by the \emph{squeezing phase}. During both these phases we distinguish the first $r$ bits of the state, called the \textbf{outer part} and denoted \textbf{$\overline{s}$}, from the remaining $b − r$ bits of the stated, called the \textbf{inner state $\widehat{s}$}. These two parts of the state will be treated differently by the sponge construction.  The inner state is of length $b − r$ and is called the \textbf{capacity c}. 
+First, all the bits of the state are initialized to zero. The input message is padded and cut into $r$-bit blocks. Then it proceeds in two phases: the \emph{absorbing phase} followed by the \emph{squeezing phase}. During both these phases we distinguish the first $r$ bits of the state, called the \textbf{outer part} and denoted \textbf{$\overline{s}$}, from the remaining $b − r$ bits of the stated, called the \textbf{inner state $\widehat{s}$}. These two parts of the state will be treated differently by the sponge construction.  The inner state is of length $b − r$ and is called the \textbf{capacity c}. 
 
 The two phases are:
 \begin{itemize}
@@ -219,3 +219,11 @@ State recovery is finding a state s, given a string Z with $Z = \textsc{squeeze}
 
 
 If $\vert Z\vert > b$, it is likely that there is only a single solution and that output binding results in recovery of the unique state that it was squeezed from. If $\vert Z \vert \le b$ there are typically several states that squeeze to $Z$ and output binding does not necessarily result in state recovery.
+
+\subsubsection{Cryptographic resistance to other attacks}
+
+\begin{rem}
+Due to the fact the inner state is not output by the sponge function, if a malevolent individual has access to $\textsc{sponge}\lbrack f , pad, r\rbrack (M_1 \vert \vert M_2 \vert \vert \cdots \vert \vert M_i, l)$, they cannot calculate $\textsc{sponge}\lbrack f , pad, r\rbrack (M_1\vert \vert M_2 \vert \vert \cdots M_i \vert \vert x, l)$ without knowing the values of  $M_1,M_2,\cdots M_i$ seeing as they need the values of $\widehat{\textsc{absorb}}(M_1,M_2,\cdots M_i)$.
+
+Cryptographic sponge functions are therefore resistant to \emph{length extension attacks}.
+\end{rem}

@@ -27,8 +27,8 @@ report:
 clean-report:
 	@(cd $(REPDIR) && rm -f $(REPORT).pdf $(REPORT).aux \
 		$(REPORT).log $(REPORT).toc $(REPORT).bbl $(REPORT).blg \
-		$(REPORT).dvi $(REPORT).out)
-	@(cd $(TEX) && rm -f *.dvi *.out *.log *.aux)
+		$(REPORT).dvi $(REPORT).out *~)
+	@(cd $(TEX) && rm -f *.dvi *.out *.log *.aux *~ *#)
 
 clean :
 	@(cd $(SRCDIR) && $(MAKE) clean)

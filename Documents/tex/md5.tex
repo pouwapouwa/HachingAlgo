@@ -1,10 +1,12 @@
 \section{MD5}
 
-MD5, designed by Ronald Rivest in 1991, is a widely used cryptographic hash function. Based on the Merkle-Damg\r{a}rd construction, this one-way function produces a 128-bit digest, usually presented in text format as a 32 digit hexadecimal number.
+MD5, designed by Ronald Rivest in 1991, is a widely used cryptographic hash function. Based on the Merkle-Damg\r{a}rd construction, this one-way function produces a 128-bit digest, usually presented in text format as a 32 digit hexadecimal number.  
+
+While MD5 is past its prime and shall not be used for new applications, (as it is completely broken with regards to collisions, see Chapter~\ref{chap:security}) a lot of existing usages of MD5 are still reasonably robust and do not warrant emergency update. It remains a good example to understand how cryptographic hash functions based on the Merkle-Damg\r{a}rd construction work.
 
 \subsection{MD5 Overview}
 \cite{Att}
-Let us now explain how the MD5 algorithm operates on a given input M, where M is an arbitrary length bit string.
+Here is how the MD5 algorithm operates on a given input M, where M is an arbitrary length bit string.
 \begin{enumerate}
 \item \emph{Padding}: The original message is padded so that the resulting length of $ M\vert \vert pad\lbrack 512\rbrack (\vert M\vert )$ is $512\cdot \vert M\vert_{512}$ where $\vert M\vert_{512}$ is a positive integer.
 
@@ -49,7 +51,7 @@ I(X, Y, Z) = Y \oplus (X \vee \overline{Z}) & \mbox{ if } 48 \le t < 64; \\
 \end{cases}
 \end{equation}
 
-The 512-bit input message block $M_i$, of the original message, is divided into sixteen 32-bit long words $m_0,m_1,\ldots,m_{15}$ (using \emph{little endian} byte ordering). These words are then extended into 64 32-bit words $W_t$ for $0 \le t < 64$:
+The 512-bit input message block $M_i$, of the original message, is divided into sixteen 32-bit long words $m_0,m_1,\ldots,m_{15}$ (using \emph{little endian} byte ordering). These words are then extended into sixty-four 32-bit words $W_t$ for $0 \le t < 64$:
 \begin{equation}
 W_t =
 \begin{cases}
@@ -116,8 +118,8 @@ The pseudo-code for the MD5 algorithm is presented in Algorithm~\ref{algo:md5}.
 \label{algo:md5}
 \begin{algorithmic}[1]
 \State{\textbf{external procedures} MD5-\textsc{pad}}
-\State{let us call $RC\lbrack 64\rbrack$ the array of rotation constants.}
-\State{let us call $AC\lbrack 64\rbrack$ the array of additional constants.}
+\State{Define $RC\lbrack 64\rbrack$: the array of rotation constants.}
+\State{Define $AC\lbrack 64\rbrack$: the array of additional constants.}
 \State{$RC\lbrack 0{\ldots}15\rbrack \gets \{7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22\}$}
 \State{$RC\lbrack 16{\ldots}31\rbrack \gets \{5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20\}$}
 \State{$RC\lbrack 32{\ldots}47\rbrack \gets \{4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23\}$}
@@ -137,7 +139,7 @@ The pseudo-code for the MD5 algorithm is presented in Algorithm~\ref{algo:md5}.
 
 \Comment{Loop through all $N$ message blocs to hash.}
 \For{$i \gets 1$ to $N$ }
-\State{let us call $W\lbrack 16\rbrack$ the array of 32-bit words in $M_i$. }
+\State{Define $W\lbrack 16\rbrack$: the array of 32-bit words in $M_i$. }
 \State{$M_i = W\lbrack 0\rbrack \vert \vert W\lbrack 1\rbrack \vert \vert \ldots vert \vert W\lbrack 15\rbrack$.}
 
 \Comment{Initial values}
