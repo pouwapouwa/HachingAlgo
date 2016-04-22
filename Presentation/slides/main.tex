@@ -43,8 +43,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%[ Introduction ]%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%TODO slide definition avec schema fonction de hashage
 \begin{frame}[fragile]
   \frametitle{Définition: fonction de hashage}
   \vfill
@@ -183,10 +181,49 @@ Une fonction de hashage est une application qui associe à un ensemble de dépar
 
 \begin{frame}[fragile]
   \frametitle{Construction de Merkle-Damg\r{a}rd}
-  % SCHEMA %
+  \begin{figure}[ht]
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+
+                \node at (-0.7,3.7){$M_{0}$};
+                \draw[->, >=latex, line width=1pt] (-0.5,3.3) -- (-0.5,1.5) -- (0,1.5);
+                \node[align=center] at (-1.5,0.5){IV\\(size n)};
+                \draw[->, >=latex, line width=1pt] (-1,0.7) -- (0,0.7);
+                \draw[line width=1pt] (0,0) -- (0,2.8) -- (1.5,1.5) -- (1.5,0) -- cycle;
+                \node at(0.7,1){$h$};
+
+                \node at (1.7,3.7){$M_{1}$};
+                \draw[->, >=latex, line width=1pt] (2,3.3) -- (2,1.5) -- (2.5,1.5);
+                \draw[->, >=latex, line width=1pt] (1.5,0.7) -- (2.5,0.7);
+                \draw[line width=1pt] (2.5,0) -- (2.5,2.8) -- (4,1.5) -- (4,0) -- cycle;
+                \node at(3.2,1){$h$};
+                \draw[->, >=latex, line width=1pt] (4,0.7) -- (5,0.7);
+
+                \draw[dashed] (5.1,0.7) -- (5.8,0.7);
+                \draw[dashed] (2.5,3.5) -- (5.5,3.5);
+
+                \node at (6.2,3.7){$M_{k-1}$};
+                \draw[->, >=latex, line width=1pt] (6.5,3.3) -- (6.5,1.5) -- (7,1.5);
+                \draw[->, >=latex, line width=1pt] (6,0.7) -- (7,0.7);
+                \draw[line width=1pt] (7,0) -- (7,2.8) -- (8.5,1.5) -- (8.5,0) -- cycle;
+                \node at(7.7,1){$h$};
+
+                \node at (8.7,3.7){$|M|$};
+                \draw[->, >=latex, line width=1pt] (9,3.3) -- (9,1.5) -- (9.5,1.5);
+                \draw[->, >=latex, line width=1pt] (8.5,0.7) -- (9.5,0.7);
+                \draw[line width=1pt] (9.5,0) -- (9.5,2.8) -- (11,1.5) -- (11,0) -- cycle;
+                \node at(10.2,1){$h$};
+                \draw[->, >=latex, line width=1pt] (11,0.7) -- (12,0.7);
+                \node[align=center] at (12.7,0.5){H(M)\\(size n)};
+
+        \end{tikzpicture}
+        \caption{\label{fig:constructionMD}Merkle-Damg\r{a}rd construction.}
+  \end{figure}
+
   \begin{itemize}
-\item{Théorème: Si la fonction de compression $h$ utilisée par la fonction de hachage $H$ l'est aussi.} 
+        \item{Théorème: Si la fonction de compression $h$ utilisée par la fonction de hachage $H$ l'est aussi.} 
   \end{itemize}
+  \vfill
 \end{frame}
 
 \begin{frame}[fragile]
