@@ -1,0 +1,48 @@
+\begin{tikzpicture}[every text node part/.style={align=center}]
+  \node[draw, ellipse, fill=pink] (H1) at(0,0)[scale=1.4]{$IV$};
+  %\draw (H1) node[scale=2]{$IV$};
+  \node[draw, rectangle, fill=green!60, minimum height = 1.5cm, minimum width = 1cm, rounded corners = 3pt] (F1) at (2,0){};
+  \draw (F1) node[scale=2]{$f$};
+  \draw [->, >=latex, line width=0.08cm] (H1) -- (F1);
+  \node[draw, rectangle, fill=green!60, minimum height = 1.5cm, minimum width = 1cm, rounded corners = 3pt] (F2) at (4,0){};
+  \draw (F2) node[scale=2]{$f$};
+  \draw [->, >=latex, line width=0.08cm] (F1) -- (F2);
+  \node[draw, rectangle, fill=green!60, minimum height = 1.5cm, minimum width = 1cm, rounded corners = 3pt] (F3) at (8,0){};
+  \draw (F3) node[scale=2]{$f$};
+  \draw [->, >=latex, dashed, line width=0.08cm] (F2) -- (F3);
+  \node[draw, rectangle, fill=green!60, minimum height = 1.5cm, minimum width = 1cm, rounded corners = 3pt] (F4) at (10,0){};
+  \draw (F4) node[scale=2]{$f$};
+  \draw [->, >=latex, line width=0.08cm] (F3) -- (F4);
+  \node[draw, rectangle, fill=yellow!60, minimum height = 1.2cm, minimum width = 1.1cm, rounded corners = 3pt, scale=1.5] (FF) at (12.5,0){Finali \\ sation};
+  \draw [->, >=latex, line width=0.08cm] (F4) -- (FF);
+  \node[draw, ellipse, fill=pink] (H2) at(15.5,0)[scale=1.3]{$HASH$};
+  \draw [->, >=latex, line width=0.08cm] (FF) -- (H2);
+
+
+  \node [draw, rectangle, fill=cyan!70, scale=1.6] (MM1) at (2,2.5){Block1};
+  \node [draw, rectangle, fill=cyan!70, scale=1.6] (MM2) at (4,2.5){Block2};
+  \node [draw, rectangle, fill=cyan!70, scale=1.6] (MM3) at (8,2.5){Block3};
+  \node [draw, rectangle, fill=cyan!70, scale=1.4] (MM4) at (10,2.5){$Padding$};
+  \draw [-, dashed] (MM2.north east) -- (MM3.north west);
+  \draw [-, dashed] (MM2.south east) -- (MM3.south west);
+
+
+  \draw [->, >=latex, line width=0.06cm] (MM1) -- (F1);
+  \draw [->, >=latex, line width=0.06cm] (MM2) -- (F2);
+  \draw [->, >=latex, line width=0.06cm] (6,2.1) -- (6,0);
+  \draw [->, >=latex, line width=0.06cm] (MM3) -- (F3);
+  \draw [->, >=latex, line width=0.06cm] (MM4) -- (F4);
+
+  \node [draw, rectangle, fill=cyan!70, scale=1.6] (M1) at (2,4.5){Messg1};
+  \node [draw, rectangle, fill=cyan!70, scale=1.6] (M2) at (4,4.5){Messg2};
+  \node [draw, rectangle, fill=cyan!70, scale=1.6] (M3) at (8,4.5){Messg3};
+  \draw [-, dashed] (M2.north east) -- (M3.north west);
+  \draw [-, dashed] (M2.south east) -- (M3.south west);
+
+
+  \draw [->, >=latex, line width=0.06cm] (M1) -- (MM1);
+  \draw [->, >=latex, line width=0.06cm] (M2) -- (MM2);
+  \draw [->, >=latex, line width=0.06cm] (6,4.1) -- (6,2.9);
+  \draw [->, >=latex, line width=0.06cm] (M3) -- (MM3);
+
+\end{tikzpicture}

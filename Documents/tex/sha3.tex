@@ -1,0 +1,78 @@
+\section{SHA-3}\label{section:sha3}
+The \textsc{SHA-3} functions are instances of the sponge construction \textsc{sponge}[$f$,pad,r] in which the underlying permutation $f$ is $\textsc{Keccak}$-p$\lbrack b, n_r \rbrack$.
+
+\subsection{Overview}
+For all hashing functions in the \textsc{SHA-3} family, the bit-length $b$ is fixed to $1600$ and the number of rounds is set to $24$.
+
+The padding rule used by \textsc{SHA-3} is multi-rate padding, as described in Section~\ref{section:padding}.
+
+This leaves two variable parameters: the desired number of bits $l$ to be output by the sponge construction, and the bitrate $r$.
+Seeing as we have $b=r+c=1600$ where $c$ is the capacity, fixing the capacity is equivalent to fixing the bitrate.
+
+
+The \textsc{SHA-3} family defines six functions, for the different values of the desired digest length and capacity.
+
+Four of these are hash functions (which output a fixed length digest) named \textsc{SHA3}-$l(M)$. The four possible values for $l$ are 224, 256, 384 and 512, and in each case the capacity is fixed to $c=2\times l$. Each of these functions appends a two-bit suffix to the message M.
+Thus with the notations used:
+$$ \textsc{SHA3}-l(M) =\textsc{sponge}[\textsc{Keccak}-p\lbrack 1600, 24 \rbrack, pad10∗1,1600-2\times l](M\vert \vert 01,l) $$
+
+
+The two other \textsc{SHA-3} functions are \emph{extendable-output functions}.
+
+\begin{defn}
+  An extendable-output function (XOF) is a function on bit strings in which the output can be extended to any desired length.
+\end{defn}
+
+\textsc{SHAKE128}$(M,l)$ (for a capacity of 256 bits, and a chosen output length $l$) and SHAKE256 (for a capacity of 512 bits, and a chosen output length $l$) are the first XOFs that NIST has standardized.
+Both functions append a four-bit suffix to the message M.
+Thus:
+\begin{equation}
+  \begin{aligned}
+    \textsc{SHAKE128}(M,l) & =\textsc{sponge}[\textsc{Keccak}-p\lbrack 1600, 24 \rbrack, pad10∗1,1600-256](M\vert \vert 1111,l) \\
+    \textsc{SHAKE256}(M,l) & =\textsc{sponge}[\textsc{Keccak}-p\lbrack 1600, 24 \rbrack, pad10∗1,1600-512](M\vert \vert 1111,l) \\
+\end{aligned}
+\end{equation}
+
+\subsection{Algorithm And Implementation}
+We have chosen to implement \textsc{SHA3}-224.
+Therefore our fixed parameters are:
+\begin{itemize}[label=\textperiodcentered,nolistsep]
+\item Digest length: $l=224$
+\item Capacity of the sponge construction: $c=448$
+\item Bitrate of the sponge construction: $r=1152$
+\item Width of the sponge construction (ie the bit-size of the state): $b=1600$
+\item Number of rounds performed by the sponge construction $n_r=24$
+\end{itemize}
+Thus the resulting hashing algorithm is:
+$$ \textsc{SHA3}-224(M) =\textsc{sponge}[\textsc{Keccak}-p\lbrack 1600, 24 \rbrack, pad10∗1,1152](M\vert \vert 01,l) $$
+
+The pseudo-code for the \textsc{SHA3}-224 algorithm is presented in Algorithm~\ref{algo:sha3}.
+\begin{algorithm}[H]
+\caption{\textsc{SHA3}-224(M)}
+\label{algo:sha3}
+\begin{algorithmic}[1]
+  \State{\textbf{external procedures:} pad10*1, $\textsc{Keccak}$-p$\lbrack b, n_r \rbrack$ }
+  \State{$l \gets 224$}
+  \State{$n_r \gets 24$}
+  \State{$b \gets 1600$}
+  \State{$r \gets b-2\times l = 1152$}  \Comment{Set the bitrate r to 1152 bits, ie 144 bytes.}
+  \State{$P \gets  M\vert \vert pad10*1\lbrack r\rbrack (\vert M\vert )$}
+  \Comment{The padded message length is a multiple of r.}
+  \State{$N \gets \vert P \vert_r$}
+  \State{Let $P\lbrack n\rbrack$ be the array of strings of length r such that $P=P_0 \vert \vert \ldots \vert \vert P_{N-1}$.}
+  \State{$\textsc{ctx} \gets 0^{b}$}
+
+  \For{$i \gets 0$ to $N-1$}
+  \State{$\textsc{ctx}\gets \textsc{Keccak}$-p$\lbrack b, n_r \rbrack(\textsc{ctx} \oplus (P_i \vert \vert O^c))$}
+  \EndFor{}
+
+\State{$Z = \lfloor \textsc{ctx}\rfloor_r$}
+
+\While{$\vert Z\vert < l$}
+\State{$\textsc{ctx}\gets \textsc{Keccak}$-p$\lbrack b, n_r \rbrack(\textsc{ctx})$}
+\State{$Z = Z\vert \vert \lfloor \textsc{ctx}\rfloor _r$ }
+\EndWhile{}
+
+\Return{$\lfloor Z\rfloor _l$}
+\end{algorithmic}
+\end{algorithm}

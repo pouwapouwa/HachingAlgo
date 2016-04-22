@@ -1,0 +1,123 @@
+\documentclass[10.5pt, a4paper, twoside, openright]{report}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[a4paper, left=2cm, right=2cm, top=2.5cm, bottom=2cm, headheight=40pt]{geometry}
+%\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{mathtools}
+%\usepackage[final]{pdfpages}
+\usepackage[titletoc]{appendix}
+%\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+\usepackage{algcompatible}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage{stmaryrd}
+\usepackage{textcomp}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usepackage[square,sort,comma,numbers]{natbib}
+\usepackage{emptypage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\title{Hashing Functions}
+\author{}
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}{Corollaire}
+\newtheorem{defn}{Definition}
+\newtheorem{Prop}{Property}
+\newtheorem{prop}{Proposition}
+\newtheorem{proof}{Proof}
+\newtheorem{rem}{Observation}
+\newtheorem{nota}{Notations}
+
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\fancyhead[C]{\leftmark}
+\fancyhead[RE,LO]{}
+\fancyhead[RO,LE]{\includegraphics[scale=0.016]{UB.jpg}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\renewcommand{\algorithmicensure}{\textbf{Interface:}}
+\raggedbottom{}
+
+\begin{document}
+\begin{titlepage}
+  \begin{sffamily}
+  \begin{center}
+
+    Univesity of Bordeaux\\College of Science \& Technology\\
+           351 Cours de la Liberation\\33400 Talence\\[1em]
+            \textbf{\underline{- TER Report -}}\\[1.5cm]
+           
+    \includegraphics[scale=0.11]{UB.jpg}
+    \\[3cm]
+
+    \HRule\\[0.3cm]
+    { \huge \bfseries Sponge Function's Implementation\\[0.5cm] }
+    \HRule\\
+    \begin{flushright}
+      \bfseries {Amelie GUEMON \& Ida TUCKER\\[1em]Master 1 CSI --- Cryptology \& Computer Security}\\[6.6cm]
+    \end{flushright}
+    
+   
+    \today
+
+  \end{center}
+  \end{sffamily}
+\end{titlepage}
+
+%% ABSTRACT
+\cleardoublepage{}
+\include{tex/abstract}
+\tableofcontents
+
+%% INTRODUCTION
+\include{tex/introduction}
+
+%% CONVENTIONS NOTATIONS
+\include{tex/conventions_notations}
+
+%% PART 1
+\include{tex/hashing_functions}
+\include{tex/md5}
+\include{tex/sha1}
+
+%% PART 2
+\include{tex/attacks}
+
+%% PART 3
+\include{tex/sponge_functions}
+\include{tex/keccak}
+\include{tex/sha3}
+
+%% CONCLUSION
+\include{tex/conclusion}
+
+\begin{appendices}
+  \include{tex/appendix}
+\end{appendices}
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+\end{document}

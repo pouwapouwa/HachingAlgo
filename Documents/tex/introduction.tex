@@ -1,0 +1,33 @@
+\chapter*{Introduction}
+A hashing function can be compared to a digital finger print, in the sense that it identifies a given individual, without providing any of their characteristics. Consequently, a cryptographic hash function provides the integrety of a message, if a single bit of data is altered in the original message, the calculated message hash will be totally different and therefore invalid.
+
+Formally, a \emph{hash function} $H:{\{0,1\}}^* \rightarrow {\{0,1\}}^n$ operates on bit strings and maps an arbitrary length bit string to a fixed length bit string which is called the \emph{hash} or \emph{diggest}.
+
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[scale=0.9]
+\node at (0,5) [draw, name=Message, rectangle, minimum width = 5cm, minimum height = 0.5cm, line width = 0.7pt]{};
+\node [above=0.01cm of Message, align=center]{Message or Data Block\\(variable length)};
+\draw[fill=cyan!50] (-0.8,2) -- (-1.5,3.5) -- (1.5,3.5) -- (0.8,2) -- cycle;
+\draw[fill=cyan!80] (-1.5,3.5) -- (-1,3.7) -- (2,3.7) -- (1.5,3.5) -- cycle;
+\draw[fill=cyan!80] (1.5,3.5) -- (2,3.7) -- (1.3,2.2) -- (0.8,2) -- cycle;
+\node at (0,2.7){H};
+\node at (0,0) [draw, name=Hash, rectangle, minimum width = 0.8cm, minimum height = 0.5cm, fill=gray!50]{};
+\node [below=0.2cm of Hash, align=center]{Hash value h\\(fixed length)};
+\draw [->, line width=1.5pt, >=latex] (Message) -- (0,3.55);
+\draw [->, line width=1.5pt, >=latex] (0,2) -- (Hash);
+\end{tikzpicture}
+\caption{\label{fig:hachage}Hash function}
+\end{figure}
+
+This compression property is particularly useful in cryptography as it significantly reduces the amount of data to encrypt. In order to ensure the authenticity and integrity of a message, one needs only to encrypt the fixed length hash as opposed to the message in its entirety.
+
+Cryptographic hash functions are fundamental components in a variety of information security applications, such as digital signature generation and verification, key derivation, and pseudorandom bit generation.
+
+Currently, the most widely used cryptographic hash functions are \textsc{SHA-1} and \textsc{MD5}. They are both based on the Merkle-Damg\r{a}rd construction, which is defined in Chapter~\ref{chap:Merkle}. Despite the fact hash functions belonging to the \textsc{SHA-2} family (based on this construction and approved for use by the NIST in 2002) are still considered cryptographically secure, theoretical weaknesses have been found in their algorithms.
+
+Some weaknesses appear to be inherent to the Merkle-Damg\r{a}rd construction and every algorithm based on it might suffer of these same vulnerabilities, particularly against differential cryptanalysis. In this case an attack on the Merkle-Damg\r{a}rd construction could be expanded to every algorithms based on it.
+
+In order to provide resiliance against Merkle-Damg\r{a}rd construction weaknesses and future advances in hash function analysis, the NIST organised a public \textsc{SHA-3} Cryptographic Hash Algorithm Competition, in pursuance of a new family of cryptographic hash functions, which rely on fundamentally different design principles to the Merkle-Damg\r{a}rd construction.
+
+The selected winner of the \textsc{SHA-3} competition is based on a construction called the \emph{sponge construction}, which is defined in Chapter~\ref{chap:Sponge}. Due to the particular properties of the sponge construction, as well as defining four new cryptographic hash functions, the standard approves two \emph{extendable output functions}. They are the first such functions the NIST\footnote{National Institute of Standards and Technology} has standardized.
