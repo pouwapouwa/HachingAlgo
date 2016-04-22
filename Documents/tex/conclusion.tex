@@ -1,8 +1,15 @@
 \chapter*{Conclusion}
 
-Our research presents the evolution of hash functions. Due to great advances in their cryptanalysis over the past decade. It is necessary to move away from the underlying constructions most hashing algorithms relied on up until recently: the Merkle Damg\r{a}rd construction.\\
-In recent years, significant advances in the field of hash function research have led to the birth of a whole new class of hash functions, based on the sponge construction.\\
-With the advance of differencial cryptanalysis,  hashing algorithms such as SHA1 and MD5 are no longer deemed cryptographically secure.\\
-And despite the fact the SHA-2 family of functions is still considered secure, inherent weaknesses in the Merkle Damgard underlying constructruction imply that sponge functions such as SHA-3 seem safer than previous ones.\\
-Thus it would seem coherent to move directly towards SHA-3, instead of SHA-2. But such a migration is not easy due to legacy systems. Therefore, one wonders how and how fast new cryptographic standards can be applied on existing structures, such as TSL or the Bitcoin cryptocurrency (based on SHA-256). Can such a migration occur without impacting these systems ?\\
+Our research presents the evolution of hash functions. Due to great advances in their cryptanalysis over the past decade, it is necessary to move away from the underlying construction most hashing algorithms relied on up until recently: the Merkle Damg\r{a}rd construction.
+
+In recent years, significant headway in the field of hash function research has led to the birth of a whole new class of hash functions, based on the sponge construction.
+
+With the progress of differencial cryptanalysis,  hashing algorithms such as SHA1 and MD5 are no longer deemed cryptographically secure.\\
+And despite the fact the SHA-2 family of functions is still considered secure, inherent weaknesses in the Merkle Damgard underlying construction imply that sponge functions such as SHA-3 seem safer than previous ones.
+
+However, historically, when a new family of hash functions is published, it doesn't take long for the first impementations to be withdrawn, in order to be revised and strengthened. For instance SHA-0 was standardised in 1993, replaced by SHA-1 in 1995 and MD4 was developed in 1990, only to be superseded by MD5 in 1991.
+
+Moreover there exist minimal changes to the plain Merkle-Damg\r{a}rd construction, easily implementable in practice, which fill the security gaps the basic construction suffers from.
+
+Thus it may seem imprudent to rush into the implementation of SHA-3 in widely used security protocols, instead of SHA-2, or functions based on an improved Merkle Damg\r{a}rd. Indeed the latter have only shown a few specific weaknesses in the past years, which we understand and can patch, whereas there could well be desastrous flaws in the sponge construction that simply have not yet been thought of.\\
 \newline
