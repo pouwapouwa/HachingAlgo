@@ -111,7 +111,39 @@ Le NIST souhaitait un algorithme reposant sur une construction complètement dif
 L'algorithme qui fut sélectionné pour SHA3, en Aout dernier, à l'issu de ce concours repose sur une construction dite en éponge. 
 
 \chapter{FONCTIONS EN ÉPONGE}
-\section{Sponge construction}
+\section{Construction de fonctions en éponge}
+La construction de l'éponge créé une fonction dite en éponge. Cette construction repose sur:
+\begin{itemize}
+\item{Une transformation ou permutation de taille fixe:
+$$f{\{0,1\}}^b \rightarrow {\{0,1\}}^b$$}
+\item{Une règle de bourrage adaptée à la construction de l'éponge}
+\item{La quantité de bits du message traitée à chaque permutation le \textbf{bitrate} $r$}
+\end{itemize}
+
+Une sortie de taille finie fixée peut être obtenue en tronquant la sortie, mais à la différence de la construction de Merkle-Damgard, la construction de l'éponge prend en entrée un message de taille quelconque, applique une série de transformations et on obtient à la sortie une chaîne de bits de taille quelconque.
+
+La permutation $f$ opère sur un nombre fini de bits appelé la \textbf{largeur} $b$. La construction de l'éponge a un état de $b$ bits.
+
+Notez qu'une fonction en éponge opère différement sur les $r$ premiers bits de l'état, qui constituent la \emph{partie interne de l'état} des $c=b-r$ derniers bits de l'état, qui eux constituent la partie externe de l'état.
+
+Tout d'abord, la règle de padding est appliquée au message M qui est ensuite scindé en blocks de $r$ bits.
+Et les bits de l'état sont tous initialisés à 0. 
+
+La construction de l'éponge opère selon deux modes de fonctionnement:
+\begin{itemize}
+\item{La phase d'absorption, au cours de laquelle la construction \emph{absorbe} le message en entrée. 
+Un XOR est effectuée entre les blocs du message paddé de longueur $r$ et la partie interne de l'état. Suivie d'une application de la permutation f sur la totalité des bits de l'état.
+Ces étapes sont répétées jusqu'à ce que tous les blocs du message en entrée soient absorbés.}
+
+\item{La deuxième phase est l'\emph{essorage}. Si la taille de la sortie $l$ désirée est inférieure à $c$, le résultat de l fonction en éponge est constitué des $l$ premiers bits de l'état. Sinon, on sort les $r$ premiers bits de l'état, puis on applique $f$ à l'état dans sa totalité, et on itère le procédé jusqu'à obtenir une sortie de longueur $l$.}
+\end{itemize} 
+Et la sortie est tronquée à ses $l$ premiers bits.
+
+Remarque: La partie interne de l'état n'est jamais directement affectée par les blocs du message en entrée, et ne sont jamais directement sortis.
+
+La capacité c détermine en fait la sécurité que peut atteindre la construction. 
+
+
 \section{Keccack}
 \section{SHA-3}
 \end{document}
