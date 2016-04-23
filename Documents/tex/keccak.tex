@@ -110,7 +110,7 @@ A \lbrack 0,4,1\rbrack = S\lbrack 41 \rbrack & \hspace{2cm} A \lbrack 1,4,1\rbra
 The reverse operation, i.e.\ converting a state array representation to the string representation can be done using the lanes and planes of A.
 
 Bits in a given lane follow sequencial order ($x=x, y=y, z=z+1$), and at the end of a lane, the following indexation of S if obtained by moving to the next lane in the same plane ($x=x+1, y=y, z=0$).
-Once all the lanes in a plane have been explored, the following indexation of S if obtained by moving to the first lane of the next plane ($x=0, y=y+1, z=0$).
+Once all the lanes in a plane have been explored, the following indexation of S is obtained by moving to the first lane of the next plane ($x=0, y=y+1, z=0$).
 
 \begin{defn}
 For $(x,y) \in \llbracket 0,5 \llbracket \times \llbracket 0,5 \llbracket$, the string \textbf{Lane (x,y)} is defined as:

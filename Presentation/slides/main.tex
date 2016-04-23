@@ -11,7 +11,7 @@
 \usetikzlibrary{positioning}
 \usepackage{color}
 \usepackage{amsmath, amsthm, amscd, amssymb, amsfonts, amsxtra}
-
+\usepackage{stmaryrd}
 
 \tikzset{
   every overlay node/.style={
@@ -394,8 +394,9 @@ La \emph{cryptanalyse différentielle} a permit de casser de nombreuses fonction
   \frametitle{Etat d'une fonction en éponge}
   \vfill
   \begin{itemize}
-    \item $\overline{S}$: partie externe de l'état, les premier $r$ bits de l'état.
-  \item $\widehat{S}$: partie interne de l'état, de taille $b-r$ bits.
+  \item $S = R \vert \vert C$.
+    \item $R$: partie externe de l'état, les premier $r$ bits de l'état.
+  \item $C$: partie interne de l'état, de taille $c=b-r$ bits.
   \end{itemize}
  \begin{figure}[H]
         \centering
@@ -404,8 +405,8 @@ La \emph{cryptanalyse différentielle} a permit de casser de nombreuses fonction
         \draw [fill=red!70!grey, line width=2pt] (-0.5,-3) rectangle (0.5,-1);
         \draw [fill=green!80, line width=2pt] (-0.5,-1) rectangle (0.5,3);
         
-        \node [align=center] at (0,1){\textbf{$\overline{S}$}};
-        \node [align=center]   at (0,-2){\textbf{$\widehat{S}$}};
+        \node [align=center] at (0,1){\textbf{$R$}};
+        \node [align=center]   at (0,-2){\textbf{$C$}};
 
         \node [align=center] at (-1.3,1){\textbf{$r$}};        
         \node [align=center] at (-2.2,-2){\textbf{$c =b-r$}};        
@@ -428,17 +429,76 @@ La \emph{cryptanalyse différentielle} a permit de casser de nombreuses fonction
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.4]{sponge1.png}
-\caption{\label{fig:sponge}Construction de fonctions en éponge $Z = \textsc{sponge}\lbrack f , pad, r\rbrack (M, l)$}
+\caption{Construction de fonctions en éponge $Z = \textsc{sponge}\lbrack f , pad, r\rbrack (M, l)$}
 \end{figure}
   \vfill
 \end{frame}
 
 \begin{frame}
-  \frametitle{La permutation Keccak}
+  \frametitle{Keccak formellement}
   \vfill
+  
+    \textbf{Paramètres de la fonction \textsc{Keccak}$\lbrack b, n_r \rbrack$ }:\\
+  \begin{itemize}
+  \item{ \textbf{$w$}: la longueur fixée des chaines de bits permutés.
+  
+  \hspace{1cm}$w=2^l$ bits, avec $0 \le l \le 6$.
+  }
+  \item \textbf{$n_r$}: le nombre d'itérations effectuées des routines internes.
+  \end{itemize}
+  \vspace{1cm}
+  \textbf{État de la fonction \textsc{Keccak}}
+\begin{itemize}
+\item{État constitué de $b = 5 \times 5 \times w$ bits.}
+\item{État représenté sous forme matricielle:
+\begin{itemize}
+\item 5 colonnes indexées horizontalement par x.
+\item 5 lignes indexées verticalement par y.
+\item w allées indexées en profondeur par z.
+\end{itemize}
+}
+\item{$A\lbrack x,y,z\rbrack$ permet d'accéder à tous les bits de l'état.}
+\end{itemize}
 
   \vfill
 \end{frame}
+
+\begin{frame}
+  \frametitle{État de la fonction Keccak:\\ Représentation matricielle}
+  \vfill
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{StateArray.png}
+\caption{État manipulé sous forme matricielle A avec $x,y,z \in\llbracket 0,5 \llbracket \times \llbracket 0,5 \llbracket \times \llbracket 0,w \llbracket$}
+\end{figure}
+  \vfill
+\end{frame}
+
+\begin{frame}
+  \frametitle{Paramètres Keccak pour SHA-3}
+  \vfill
+\textbf{SHA-3 implémente \textsc{Keccak}$\lbrack 1600, 24 \rbrack$}
+\begin{itemize}
+\item{$n_r=24$}
+\item{$b = 1600 = 2^6\times 25$}
+\item{$l = 6$}
+\end{itemize}
+  \vfill
+\end{frame}
+
+\begin{frame}
+  \frametitle{Keccak: vision d'ensemble}
+  \vfill
+  \begin{itemize}
+  \item{nombre d'itérations: $12+2\times l$}
+  \item{Une itération \textsc{Rnd} est constituée de 5 fonctions:
+   $$\textsc{Rnd}(A,i_r)=\iota ( \chi ( \pi ( \rho (\Theta (A)))), i_r)$$
+   }
+   \end{itemize}
+  \vfill
+\end{frame}
+
+
 \nocite{*}
 \bibliographystyle{alpha}
 
