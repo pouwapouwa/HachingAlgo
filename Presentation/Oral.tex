@@ -79,12 +79,26 @@ La résistance à la seconde pré-image garantie l’intégrité d’un fichier:
 On peut utiliser des fonctions de compression résistantes aux collisions pour construire des fonctions de hachage, elles-aussi résistantes aux collisions.
 C’est sur ce principe que repose la construction de Merkle-Damgard.
 L’approche traditionnelle pour construire des fonctions de Hachage a été de se reposer sur une construction appelée la construction de Merkle-Damgard.
-\section{Contruction}
+\section{Construction}
 
 \chapter{ATTAQUES}
 \section{Attaque par force brute: l’attaque des anniversaires}
+Si l'on suppose que l'ensemble de messages $\mathcal{E}$ est choisi de façon aléatoire et uniforme parmi tous les messages possibles, on peut montrer que le nombre de messages à tester afin d'avoir une probabilité donnée de trouver des collisions ne dépend que de la taille des condensés.
+
+Ainsi, afin d'avoir une probabilité supérieure à $50\%$ de trouver des collisions, il suffit de tester aléatoirement peu plus de $\sqrt{N}$ messages.
+
+Dans le cas de SHA1 et MD5, puisque les condensés sont de 128 et 160 bits respectivement, l'attaque par force brute se fait de façon naïve en $2^56$ et $2^80$ essais.
+
+Pour donner une idée en temps, 8 cartes graphiques NVidia Titan X peuvent calculer 115840 millions de condensés MD5 par seconde. Cela prendrait donc $ \approx 5 \mbox{ ans}$ afin de trouver une collision avec un tel dispositif.
+Ainsi avec une armée de machines dédiées à cette tâche, il serait relativement facile de trouver des collisions pour MD5 en un temps raisonnable.
+
+L'attaque par force brute fourni donc une taille minimale nécéssaire pour la taille des condensés afin de garantir une certaine sécurité de base.
+
+Il est recommandé de prendre $n \ge 128$, voir $n\ge 160$. Ces recommandations sont cependant relatives aux performances actuelles des ordinateurs; elles ne sont que provisoires et ne correspondent en aucun cas à un seuil théorique de sécurité.
+
 \section{Quand une fonction de hachage est-elle considérée cassée?}
 Une fonction de hashage est dite \textbf{cassée} lorsqu'il existe une attaque connue permettant de trouver des collisions ayant une complexité moindre que l'attaque par force brutte. 
+
 \section{MD5 et SHA1: cassés en 2004}
 Il existe des algorithmes aujourd’hui capables de trouver des collisions pour MD5 en quelques secondes, et l’attaque de SHA1 découverte par l’équipe de Wang en 2004 a une probe supérieure à $50\%$ de trouver des collisions en $2^{69}$ opérations, c’est a dire plus rapide qu’une attaque par force brute ($2^80$) d’un facteur 2000.
 Si $2^{69}$ reste à l’heure actuelle hors de portée du commun des ordinateurs, cette attaque reste un résultat important dans le domaine de la cryptanalyse, et est suffisant pour qu’il soit déconseillé d’utiliser SHA1 aujourd’hui.
