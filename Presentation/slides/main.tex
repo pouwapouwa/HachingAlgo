@@ -64,7 +64,7 @@
   \frametitle{Définition: fonction de hashage}
   \vfill
 
-Une fonction de hashage est une application qui associe à un ensemble de départ infini $\{0,1\}^*$ un ensemble d'arrivée fini  $\{0,1\}^n$ constitué de chaînes de bits de taille n.
+\centerline{H:$\{0,1\}^* \rightarrow \{0,1\}^n$}
 
     \vfill
 
@@ -90,7 +90,7 @@ Une fonction de hashage est une application qui associe à un ensemble de dépar
         \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b2);
           
         \end{tikzpicture}
-        \caption{Collision dans une fonction de Hachage}
+        \caption{Surjectivité d'une fonction de Hachage}
     \end{figure}
 
     \vfill
@@ -178,12 +178,15 @@ Une fonction de hashage est une application qui associe à un ensemble de dépar
 
 \begin{frame}[fragile]
   \frametitle{Construction de Merkle-Damg\r{a}rd}
-  
-  La construction de Merkle-Damg\r{a}rd permet de définir des fonctions de hachage en itérant des fonctions de compression.
+  \vfill
+ Merkle-Damg\r{a}rd définit des fonctions de hachage en \textbf{itérant des fonctions de compression}.
+   \vfill
   \begin{itemize}
-  \item{Une fonction de compression part d'un ensemble fini vers un ensemble fini.}
-  \item{Une fonction de hachage part d'un ensemble infini vers un ensemble fini.}
+  \item{\textbf{Fonction de compression:} part d'un ensemble fini vers un ensemble fini réduit.}
+  \vfill
+  \item{\textbf{Fonction de hachage:} part d'un ensemble infini vers un ensemble fini.}
   \end{itemize}
+  \vfill
 \end{frame}
 
 \begin{frame}[fragile]
@@ -228,7 +231,7 @@ Une fonction de hashage est une application qui associe à un ensemble de dépar
   \end{figure}
 
   \begin{itemize}
-        \item{Théorème: Si la fonction de compression $h$ utilisée par la fonction de hachage $H$ l'est aussi.} 
+        \item{\textbf{Théorème:} Si la fonction de compression $h$ utilisée par la fonction de hachage $H$ l'est aussi.} 
   \end{itemize}
   \vfill
 \end{frame}

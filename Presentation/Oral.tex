@@ -57,18 +57,16 @@ La particularité de cette nouvelle famille est qu’elle repose sur des princip
 
 \chapter{INTRODUCTION}
 \section{Qu’est-ce qu’une fonction de hachage}
-Une fonction de hachage est un algorithme permettant de calculer une empreinte de taille fixe à partir d’une donnée de taille quelconque.
+Une fonction de hachage est un algorithme permettant de calculer une empreinte de taille fixe à partir d’une donnée de taille quelconque en appliquant une série de transformations pour réduire ces données.
 
 On obtient à la sortie une chaîne de caractères hexadécimaux, l'empreinte, qui résume en quelque sorte le fichier. 
 
 A l’origine, les fonctions de hachage ont été créés pour faciliter la gestion de base de données. Plutôt que de manipuler des données de taille variable et potentiellement grande, on associe à ces données une empreinte de taille fixe, 
 sur lesquelles des comparaisons sont plus rapides à effectuer. L’utilisation de fonctions de hachage permet par conséquent d’accélerer des opérations comme le tri, l’insertion ou l’accès à un élément.
 
-Une fonction de hachage prend en entrée un message de taille quelconque, applique une série de transformations et réduit ces données. 
-
 Cette sortie a une taille fixe qui varie selon les algorithmes (128 bits pour MD5 et 160 bits pour SHA-1). 
 
-Remarquons qu’elles ne peuvent être injectives, par conséquent il y aura forcément plusieurs messages menant aux mêmes hachés.
+Remarquons qu'une fonction de hachage  ne peut être injective, par conséquent il y aura forcément plusieurs messages menant aux mêmes hachés.
 
 \section{Fonctions de hachage cryptographiques} 
 Pour qu’une fonction de hachage soit utilisée à des fin cryptographiques, ( il s’agit alors d’une fonction de hachage cryptographique) elle doit satisfaire certaines contraintes.
@@ -80,13 +78,32 @@ La résistance à la seconde pré-image garantie l’intégrité d’un fichier:
 \item{De même il doit être difficile pour un attaquant de trouver deux messages ayant le mêmee haché, car il pourrait alors substituer un message par un autre, ou nier avoir envoyé un message (intégrité et non répudiation): \textbf{Résistance aux collisions}.}
 \end{itemize}
 
+\section{Padding}
+Étant donné qu'une fonction de hachage agit de façon itérative sur des blocks du message en entrée, le message doit en général être paddé, afin que le message soit de longueur un multiple de la longueur d'un block.
+
+Il faut faire attention à la règle de bourrage utilisée, car si on la choisit trop simple, des collisions peuvent facilement être crées.
+
+Dans le cas de SHA1 et MD5, basés sur Merkle Damg\r{a}rd, les algorithmes agissent sur des blocs de 512 bits. On rajoute un 1, puis un nombre fini de 0, de telle sorte que la longueur du resultat soit congru à 448 mod 512. Ensuite, on y ajoute la longueur du message, sur 64 bits.
+
 
 \chapter{MERKLE DAMGARD}
 \section{Idée}
-On peut utiliser des fonctions de compression résistantes aux collisions pour construire des fonctions de hachage, elles-aussi résistantes aux collisions.
-C’est sur ce principe que repose la construction de Merkle-Damgard.
 L’approche traditionnelle pour construire des fonctions de Hachage a été de se reposer sur une construction appelée la construction de Merkle-Damgard.
+
+Cette construction utilise des fonctions de compression résistantes aux collisions pour construire des fonctions de hachage, elles-aussi résistantes aux collisions.
+
+Une fonction de compression part d’un ensemble fini vers un ensemble fini de taille réduite alors qu'une fonction de hachage part d’un ensemble infini vers un ensemble fini. 
+
 \section{Construction}
+
+La construction de MD reçoit en entrée une valeur initiale IV de même taille que l'empreinte et un message de longueur arbitraire.
+
+Le message est d'abord paddé afin d'obtenir une longueur adéquate, puis scindé en blocks de 512 bits.
+
+On itère ensuite la fonction de compression sur les blocks de taille fixe du message.
+
+Après la première itération, le fonction de compression prend en entrée la sortie de l'itération précédente au lieu de l'IV.
+
 
 \chapter{ATTAQUES}
 \section{Attaque par force brute: l’attaque des anniversaires}
