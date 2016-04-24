@@ -81,14 +81,48 @@
   \vfill
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{État de la fonction Keccak:\\ Représentation matricielle}
   \vfill
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.3]{StateArray.png}
-\caption{État manipulé sous forme matricielle A avec $x,y,z \in\llbracket 0,5 \llbracket \times \llbracket 0,5 \llbracket \times \llbracket 0,w \llbracket$}
-\end{figure}
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.3]
+
+      \newcommand\faceside[6]{
+        \draw (-2+#4,-1+#5) node[]{} node{$\bullet$};
+        \pgfmathparse{#1/2+#4}
+        \node[text centered, font=\bf] at (\pgfmathresult,-0.7+#5) {#6};
+        \foreach \a in {1,...,#1} {
+          \foreach \b in {1,...,#2} {
+            \fill[fill=white, draw=black] (#4+-1+\a,#5+-1+\b) -- (#4+\a,#5+-1+\b) -- (#4+\a,#5+\b) -- (#4+-1+\a,#5+\b) -- cycle;
+          }
+          \pgfmathparse{-1+#3}
+          \foreach \d [evaluate=\d as \dd using \d*0.5] in {0,...,\pgfmathresult} {
+            \fill[fill=white, draw=black] (#4+-1+\a+\d-\dd,#5+#2+\d-\dd) -- (#4+\a+\d-\dd,#5+#2+\d-\dd) -- (#4+\a+\d+0.5-\dd,#5+#2+\d+0.5-\dd) -- (#4+\a+\d-0.5-\dd,#5+#2+\d+0.5-\dd) -- cycle;
+          }
+        }
+        \foreach \c in {1,...,#2} {
+          \pgfmathparse{-1+#3}
+          \foreach \e [evaluate=\e as \ee using \e*0.5] in {0,...,\pgfmathresult} {
+            \fill[fill=white, draw=black] (#4+#1+\e-\ee,#5+-1+\c+\e-\ee) -- (#4+#1+\e+0.5-\ee,#5+-1+\c+\e+0.5-\ee) -- (#4+#1+\e+0.5-\ee,#5+0.5+\c+\e-\ee) -- (#4+#1+\e-\ee,#5+\c+\e-\ee) -- cycle;
+          }
+        }
+      }
+
+      \faceside{1}{1}{1}{-10}{11}{bit}
+      \faceside{5}{1}{1}{0}{11}{row}\draw [->, >=latex, dashed] (-2,10) -- (-1,10);\draw (-0.6,10) node[]{$x$};
+      \faceside{1}{5}{1}{10}{11}{column}\draw [->, >=latex, dashed] (8,10) -- (8,11);\draw (8,11.4) node[]{$y$};
+      \faceside{1}{1}{5}{20}{11}{lane}\draw [->, >=latex, dashed] (18,10) -- (18.8,10.8);\draw (19.1,11.2) node[]{$z$};
+      \faceside{5}{1}{5}{-10}{0}{plane}\draw [->, >=latex, dashed] (-12,-1) -- (-11,-1);\draw [->, >=latex, dashed] (-12,-1) -- (-11.1,-0.2);\draw (-10.6,-1) node[]{$x$};\draw (-10.9,0.2) node[]{$z$};
+      \faceside{5}{5}{1}{0}{0}{slice}\draw [->, >=latex, dashed] (-2,-1) -- (-1,-1);\draw [->, >=latex, dashed] (-2,-1) -- (-2,0);\draw (-0.6,-1) node[]{$x$};\draw (-2,0.4) node[]{$y$};
+      \faceside{1}{5}{5}{10}{0}{sheet}\draw [->, >=latex, dashed] (8,-1) -- (8,0);\draw [->, >=latex, dashed] (8,-1) -- (8.8,-0.2);\draw (8,0.4) node[]{$y$};\draw (9.1,0.2) node[]{$z$};
+      \faceside{5}{5}{5}{20}{0}{state}\draw [->, >=latex, dashed] (18,-1) -- (19,-1);\draw [->, >=latex, dashed] (18,-1) -- (18,0);\draw [->, >=latex, dashed] (18,-1) -- (18.8,-0.2);\draw (19.4,-1) node[]{$x$};\draw (18,0.4) node[]{$y$};\draw (19.1,0.2) node[]{$z$};
+      
+    
+    \end{tikzpicture}
+    %\includegraphics[scale=0.3]{StateArray.png}
+    \caption{État manipulé sous forme matricielle A avec $x,y,z \in\llbracket 0,5 \llbracket \times \llbracket 0,5 \llbracket \times \llbracket 0,w \llbracket$}
+  \end{figure}
   \vfill
 \end{frame}
 
