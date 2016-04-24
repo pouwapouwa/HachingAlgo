@@ -146,5 +146,26 @@ La capacité c détermine en fait la sécurité que peut atteindre la constructi
 
 \section{Keccack}
 La fonction de compression Keccak travaille sur les mots de $w=2^k$ bits.
+
+Pour un processeur de $64$ bits il est naturel de choisir $w=64$.
+\begin{itemize}
+\item{$\Theta$:
+La première routine $\Theta$ calcule la parité de chaque colonne, puis effectue des ou exclusifs entre les parités de certaines colonnes deux à deux (cela correspond donc à la parité de deux colonnes).
+Enfin un XOR est effectué entre chaque bit de l'état et une des parités de deux colonnes calculée précédemment. 
+}
+
+\item{$\rho$: 
+Décalage circulaire des rangées (ou mots) de l'état: rotation des rangées par un 'offset' qui dépend de la rangée.}
+\item{$\pi$: 
+Permutation des 25 mots avec un motif fixé: réarrange la position des rangées.}
+\item{$\chi$: 
+XOR's entre chaque bit de l'état et une fonction non linéaire dépendant de deux autres bit dans la même ligne (y et z fixés).
+Décalage circulaire des rangées (ou mots) de l'état.}
+\item{$\iota$:
+Calculer le ou exclusif d’une constante avec un mot de l’état, qui dépend du numéro de l’itération $i_r$:}
+
+
+  Processeur de $64$ bits $\Rightarrow$ choix naturel $w=64$.
+\end{itemize}
 \section{SHA-3}
 \end{document}
