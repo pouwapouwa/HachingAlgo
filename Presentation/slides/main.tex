@@ -343,7 +343,7 @@ $$P_{Success} > 50\% \mbox{ pour } 2^{80} \mbox{ calculs de condensés.}$$
   \vfill
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Fonctions de hachage cassée}
   \vfill
 \textbf{Définition}:\\
@@ -351,7 +351,10 @@ Une fonction de hashage est dite \emph{cassée} lorsqu'il existe une attaque con
   \vspace{1.5cm}
   
 \textbf{État actuel}:\\
-La \emph{cryptanalyse différentielle} a permit de casser de nombreuses fonctions de hachage itérées, basées sur Merkle-Damg\r{a}rd (dont SHA0, SHA1, MD5).
+\begin{itemize}
+\item{La \emph{cryptanalyse différentielle} a cassé de nombreuses fonctions de hachage itérées, basées sur Merkle-Damg\r{a}rd (dont SHA0, SHA1, MD5).}
+\item{Des attaques génériques de Merkle-Damg\r{a}rd existent. }
+\end{itemize}
   \vfill
 \end{frame}
 

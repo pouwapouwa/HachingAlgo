@@ -75,7 +75,7 @@ Pour qu’une fonction de hachage soit utilisée à des fin cryptographiques, ( 
 Il est alors difficile pour qu’un attaquant puisse trouver un message qui mène à un haché donné 	(signatures falsifiées si Oscar a une liste de signatures que Bob acceptera et qu’il trouve un message qui est valide pour cette signature, la fonction de hachage ne garantie plus l’intégrité).}
 \item{La moindre modification dans le fichier original doit engendrer un condensé totalement différent. En outre, le hachage doit rendre impossible la création d’un fichier qui donne la même empreinte qu’un autre préalablement fixé: \textbf{Résistance à la seconde pré-image}. 
 La résistance à la seconde pré-image garantie l’intégrité d’un fichier: si elle n’est pas respectée, ou pourrait facilement générer un fichier corrompu mais valide aux yeux de l’utilisateur.}
-\item{De même il doit être difficile pour un attaquant de trouver deux messages ayant le mêmee haché, car il pourrait alors substituer un message par un autre, ou nier avoir envoyé un message (intégrité et non répudiation): \textbf{Résistance aux collisions}.}
+\item{De même il doit être difficile pour un attaquant de trouver deux messages ayant le même haché, car il pourrait alors substituer un message par un autre, ou nier avoir envoyé un message (intégrité et non répudiation): \textbf{Résistance aux collisions}.}
 \end{itemize}
 
 \section{Padding}
@@ -96,15 +96,18 @@ Une fonction de compression part d’un ensemble fini vers un ensemble fini de t
 
 \section{Construction}
 
-La construction de MD reçoit en entrée une valeur initiale IV de même taille que l'empreinte et un message de longueur arbitraire.
+La construction de MD reçoit en entrée une valeur d'initialisation IV de même taille que l'empreinte et un message de longueur arbitraire.
 
 Le message est d'abord paddé afin d'obtenir une longueur adéquate, puis scindé en blocks de 512 bits.
 
 On itère ensuite la fonction de compression sur les blocks de taille fixe du message.
 
-Après la première itération, le fonction de compression prend en entrée la sortie de l'itération précédente au lieu de l'IV.
+Après la première itération, la fonction de compression prend en entrée la sortie de l'itération précédente au lieu de l'IV.
 
-%TODO THEOREME
+% THEOREME
+La propriété qui rend cette construction particulièrement intéressante d'un point de vue cryptographique est que si la fonction de compression utilisée est résistante aux collisions, alors la fonction de hachage dans son ensemble l'est aussi.
+
+L’algorithme de Merkle-Damg\r{a}rd a longtemps fait figure de référence dans ce domaine. Il est notamment utilisé par les fonctions MD5, SHA-1 et les fonctions de la famille SHA-2, qui sont les fonctions de hachage les plus utilisées à ce jour.
 
 %TODO ABORDER SHA-1 ET MD5
 
@@ -114,11 +117,11 @@ La meilleure attaque générique en recherche de collisions repose sur le parado
 
 Le calcul de hachés de messages aléatoires correspond à un tirage aléatoire sur l’espace des empreintes , de taille $2^n$. D’après le raisonnement précédent, le nombre de hachés qu’il faut calculer pour trouver une collision est de l’ordre de $\sqrt{2^n} = 2^{n/2}$
 
-Si l'on suppose que l'ensemble de messages $\mathcal{E}$ est choisi de façon aléatoire et uniforme parmi tous les messages possibles, on peut montrer que le nombre de messages à tester afin d'avoir une probabilité donnée de trouver des collisions ne dépend que de la taille des condensés.
+%Si l'on suppose que l'ensemble de messages $\mathcal{E}$ est choisi de façon aléatoire et uniforme parmi tous les messages possibles, on peut montrer que le nombre de messages à tester afin d'avoir une probabilité donnée de trouver des collisions ne dépend que de la taille des condensés.
 
-Ainsi, afin d'avoir une probabilité supérieure à $50\%$ de trouver des collisions, il suffit de tester aléatoirement peu plus de $\sqrt{N}$ messages.
+Ainsi, afin d'avoir une probabilité supérieure à $50\%$ de trouver des collisions, il suffit de tester aléatoirement un peu plus de $\sqrt{N}$ messages.
 
-Dans le cas de SHA1 et MD5, puisque les condensés sont de 128 et 160 bits respectivement, l'attaque par force brute se fait de façon naïve en $2^56$ et $2^80$ essais.
+Dans le cas de SHA1 et MD5, puisque les condensés sont de 128 et 160 bits respectivement, l'attaque par force brute se fait de façon naïve en $2^{64}$ et $2^{80}$ essais.
 
 Pour donner une idée en temps, 8 cartes graphiques NVidia Titan X peuvent calculer 115840 millions de condensés MD5 par seconde. Cela prendrait donc $ \approx 5 \mbox{ ans}$ afin de trouver une collision avec un tel dispositif.
 Ainsi avec une armée de machines dédiées à cette tâche, il serait relativement facile de trouver des collisions pour MD5 en un temps raisonnable.
@@ -131,15 +134,15 @@ Il est recommandé de prendre $n \ge 128$, voir $n\ge 160$. Ces recommandations 
 Une fonction de hashage est dite \textbf{cassée} lorsqu'il existe une attaque connue permettant de trouver des collisions ayant une complexité moindre que l'attaque par force brutte. 
 
 \section{MD5 et SHA1: cassés en 2004}
-Il existe des algorithmes aujourd’hui capables de trouver des collisions pour MD5 en quelques secondes, et l’attaque de SHA1 découverte par l’équipe de Wang en 2004 a une probe supérieure à $50\%$ de trouver des collisions en $2^{69}$ opérations, c’est a dire plus rapide qu’une attaque par force brute ($2^80$) d’un facteur 2000.
+Il existe des algorithmes aujourd’hui capables de trouver des collisions pour MD5 en quelques secondes, et l’attaque de SHA1 découverte par l’équipe de Wang en 2004 a une probabilité supérieure à $50\%$ de trouver des collisions en $2^{69}$ opérations, c’est a dire plus rapide qu’une attaque par force brute ($2^80$) d’un facteur 2000.
 Si $2^{69}$ reste à l’heure actuelle hors de portée du commun des ordinateurs, cette attaque reste un résultat important dans le domaine de la cryptanalyse, et est suffisant pour qu’il soit déconseillé d’utiliser SHA1 aujourd’hui.
+
 Le nombre de fonctions de hachage cryptographique sûres a réduit considérablement dans la dernière décennie, d’autant que l’on suspecte SHA-2 de n’être plus aussi sécurisée qu’on a pu le croire. En effet, bien que SHA-2 ne soit pas cassée, et que son implémentation reste recommandée par le NIST il existe des attaques contre des versions réduites de SHA-2 (la fonction de compression est itérée sur 46 tours au lieu de 64).
 
-Quoi qu'il en soit, ces progrès importants dans la cryptanalyse des fonctions de hachage ont poussé le NIST à développer de nouveaux algorithmes de hachage standards. La recherche de cette nouvelle norme c'et faite sous la forme d'un concours, comme pour AES, la communauté cryptographique était invitée à proposer des algorithmes et parmi eux un ou plusieurs seront sélectionnés à l’issue du processus.
+De plus, des découvertes récentes révèlent certaines attaques génériques de la construction de Merkle-Damg\r{a}rd, c’est-à-dire de propriétés valables pour toutes les fonctions de hachage fondées sur cette construction.
+(Extension de messages, possibilité de générer des multicollisions avec une complexité anormalement faible, ne permet pas d’obtenir une résistance à la recherche de secondes préimages en 2n opérations).
 
-Le NIST souhaitait un algorithme reposant sur une construction complètement différente que Merkle-Damgard, ainsi, même si une attaque est découverte contre ce types de construction, remettant en question la sécurité de SHA2, l'algorithme pour SHA3 ne serait pas affecté.
- 
-L'algorithme qui fut sélectionné pour SHA3, en Aout dernier, à l'issu de ce concours repose sur une construction dite en éponge. 
+Quoi qu'il en soit, ces progrès importants dans la cryptanalyse des fonctions de hachage ont poussé le NIST à rechercher de nouveaux algorithmes de hachage standards. Ils souhaitaient un algorithme reposant sur une construction complètement différente que Merkle-Damgard. L'algorithme qui fut sélectionné pour SHA-3 repose sur une construction dite en éponge. 
 
 \chapter{FONCTIONS EN ÉPONGE}
 \section{Construction de fonctions en éponge}
@@ -147,17 +150,14 @@ La construction de l'éponge créé une fonction dite en éponge. Cette construc
 \begin{itemize}
 \item{Une transformation ou permutation de taille fixe:
 $$f{\{0,1\}}^b \rightarrow {\{0,1\}}^b$$}
-\item{Une règle de bourrage adaptée à la construction de l'éponge}
-\item{La quantité de bits du message traitée à chaque permutation le \textbf{bitrate} $r$}
 \end{itemize}
 
-Une sortie de taille finie fixée peut être obtenue en tronquant la sortie, mais à la différence de la construction de Merkle-Damgard, la construction de l'éponge prend en entrée un message de taille quelconque, applique une série de transformations et on obtient à la sortie une chaîne de bits de taille quelconque.
+qui opère sur un nombre fini de bits $b$. La construction de l'éponge a un état de $b$ bits.
 
-La permutation $f$ opère sur un nombre fini de bits appelé la \textbf{largeur} $b$. La construction de l'éponge a un état de $b$ bits.
+Notez qu'une fonction en éponge opère différement sur les $r$ premiers bits de l'état, qui constituent la \emph{partie interne de l'état} que sur les $c=b-r$ derniers bits de l'état, qui eux constituent la partie externe de l'état.
 
-Notez qu'une fonction en éponge opère différement sur les $r$ premiers bits de l'état, qui constituent la \emph{partie interne de l'état} des $c=b-r$ derniers bits de l'état, qui eux constituent la partie externe de l'état.
-
-Tout d'abord, la règle de padding est appliquée au message M qui est ensuite scindé en blocks de $r$ bits.
+Voyons les opérations de la construction dans son entité:\\
+Tout d'abord, une règle de padding est appliquée au message M qui est ensuite scindé en blocks de $r$ bits.
 Et les bits de l'état sont tous initialisés à 0. 
 
 La construction de l'éponge opère selon deux modes de fonctionnement:
@@ -166,38 +166,66 @@ La construction de l'éponge opère selon deux modes de fonctionnement:
 Un XOR est effectuée entre les blocs du message paddé de longueur $r$ et la partie interne de l'état. Suivie d'une application de la permutation f sur la totalité des bits de l'état.
 Ces étapes sont répétées jusqu'à ce que tous les blocs du message en entrée soient absorbés.}
 
-\item{La deuxième phase est l'\emph{essorage}. Si la taille de la sortie $l$ désirée est inférieure à $c$, le résultat de l fonction en éponge est constitué des $l$ premiers bits de l'état. Sinon, on sort les $r$ premiers bits de l'état, puis on applique $f$ à l'état dans sa totalité, et on itère le procédé jusqu'à obtenir une sortie de longueur $l$.}
+\item{La deuxième phase est l'\emph{essorage}. Si la taille de la sortie $l$ désirée est inférieure à $c$, le résultat de la fonction en éponge est constitué des $l$ premiers bits de l'état. Sinon, on sort les $r$ premiers bits de l'état, puis on applique $f$ à l'état dans sa totalité, et on itère le procédé jusqu'à obtenir une sortie de longueur $l$.}
 \end{itemize} 
-Et la sortie est tronquée à ses $l$ premiers bits.
 
-Remarque: La partie interne de l'état n'est jamais directement affectée par les blocs du message en entrée, et ne sont jamais directement sortis.
+La construction de l'éponge sort une chaîne de bits de taille quelconque.
 
-La capacité c détermine en fait la sécurité que peut atteindre la construction. 
+Une sortie de taille finie fixée peut être obtenue en tronquant la sortie à ses $l$ premiers bits.
+
+%Remarque: La partie interne de l'état n'est jamais directement affectée par les blocs du message en entrée, et ne sont jamais directement sortis.
+
+%La capacité c détermine en fait la sécurité que peut atteindre la construction. 
+
+La permutation fixe qui est utilisée pour l'implementation de SHA-3 est la fonction Keccak.
+\section{Keccak}
+La fonction de compression Keccak dépend de deux paramètres:
+
+  \begin{itemize}
+  \item{ La taille des mots sur lesquels elle opère, qui est toujours une puissance de deux: $w=2^l$ bits. Le nombre de bits b de l'état se déduit directement de la taille des mots.}
+    \item{ Le nombre de rondes ou itération effectuées par la permutation.}
+  \end{itemize}
 
 
-\section{Keccack}
-La fonction de compression Keccak travaille sur les mots de $w=2^k$ bits.
+Notez que les rondes de la fonction Keccak opèrent sur l'état représenté sous forme matricielle.
 
-Pour un processeur de $64$ bits il est naturel de choisir $w=64$.
+L'état est alors une matrice en trois dimension $5\times 5 \times w$.
+
+On voit ici les différentes parties de la l'état sous forme matricielle.
+
+Une ronde de Keccak est constitué d'une séquence de 5 routines:
+
+
 \begin{itemize}
 \item{$\Theta$:
-La première routine $\Theta$ calcule la parité de chaque colonne, puis effectue des ou exclusifs entre les parités de certaines colonnes deux à deux (cela correspond donc à la parité de deux colonnes).
-Enfin un XOR est effectué entre chaque bit de l'état et une des parités de deux colonnes calculée précédemment. 
+La première routine $\Theta$ calcule la parité de deux colonnes.
+Puis un XOR est effectué entre chaque bit de l'état et une des parités de deux colonnes calculée précédemment. 
 }
 
 \item{$\rho$: 
-Décalage circulaire des rangées (ou mots) de l'état: rotation des rangées par un 'offset' qui dépend de la rangée.}
+Effectue un décalage circulaire des rangées (ou mots) de l'état.
+
+Rotation des rangées par un 'offset' qui dépend de la rangée.}
 \item{$\pi$: 
-Permutation des 25 mots avec un motif fixé: réarrange la position des rangées.}
+ Réarrange la position des rangées.
+ 
+ Effectue une permutation des 25 mots avec un motif fixé:}
 \item{$\chi$: 
-XOR's entre chaque bit de l'état et une fonction non linéaire dépendant de deux autres bit dans la même ligne (y et z fixés).
-Décalage circulaire des rangées (ou mots) de l'état.}
+Effectue un XOR entre chaque bit de l'état et une fonction non linéaire dépendant de deux autres bit dans la même ligne (y et z fixés).
+}
 \item{$\iota$:
-Calculer le ou exclusif d’une constante avec un mot de l’état, qui dépend du numéro de l’itération $i_r$:}
+Calcule le ou exclusif d’une constante avec un mot de l’état, qui dépend du numéro de l’itération $i_r$:}
+\end{itemize}
 
 \section{SHA-3}
-  Processeur de $64$ bits $\Rightarrow$ choix naturel $w=64$.
-\end{itemize}
+Ainsi la fonction SHA-3 est une implémentation de la construction de l'éponge qui repose sur la permutation Keccak.
+Le nombre de rondes est fixé à 24.
+
+Pour un processeur de $64$ bits il est naturel de choisir une taille des mots de $w=64$ bits.
+
+Cette norme a été choisie à l'issue d'un concours similaire à la compétition AES, lancé le 2 novembre 2007 et organisé par le National Institute of Standards and Technology (NIST).
+
+Le but étant de fournir une alternative à SHA-2 (bien que le NIST maintienne que SHA-2 soit encore utilisable).
 \chapter{Conclusion}
 
 Ainsi, dû à des avancées majeures dans le domaine de la cryptanalyse des algorithmes de hachage basés sur la construction de Merkle-Dam\r{a}rd dans la dernière décennie, il a été nécessaire de s'éloigner de cette brique de base sur laquelle reposaient tous les algorithme de hachages cryptographiques standardisés.
