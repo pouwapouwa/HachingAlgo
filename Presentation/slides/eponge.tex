@@ -112,11 +112,11 @@
       \faceside{1}{1}{1}{-10}{11}{bit}
       \faceside{5}{1}{1}{0}{11}{row}\draw [->, >=latex, dashed] (-2,10) -- (-1,10);\draw (-0.6,10) node[]{$x$};
       \faceside{1}{5}{1}{10}{11}{column}\draw [->, >=latex, dashed] (8,10) -- (8,11);\draw (8,11.4) node[]{$y$};
-      \faceside{1}{1}{5}{20}{11}{lane}\draw [->, >=latex, dashed] (18,10) -- (18.8,10.8);\draw (19.1,11.2) node[]{$z$};
-      \faceside{5}{1}{5}{-10}{0}{plane}\draw [->, >=latex, dashed] (-12,-1) -- (-11,-1);\draw [->, >=latex, dashed] (-12,-1) -- (-11.1,-0.2);\draw (-10.6,-1) node[]{$x$};\draw (-10.9,0.2) node[]{$z$};
+      \faceside{1}{1}{2}{20}{11}{lane}\draw [->, >=latex, dashed] (18,10) -- (18.8,10.8);\draw (19.1,11.2) node[]{$z$};
+      \faceside{5}{1}{2}{-10}{0}{plane}\draw [->, >=latex, dashed] (-12,-1) -- (-11,-1);\draw [->, >=latex, dashed] (-12,-1) -- (-11.1,-0.2);\draw (-10.6,-1) node[]{$x$};\draw (-10.9,0.2) node[]{$z$};
       \faceside{5}{5}{1}{0}{0}{slice}\draw [->, >=latex, dashed] (-2,-1) -- (-1,-1);\draw [->, >=latex, dashed] (-2,-1) -- (-2,0);\draw (-0.6,-1) node[]{$x$};\draw (-2,0.4) node[]{$y$};
-      \faceside{1}{5}{5}{10}{0}{sheet}\draw [->, >=latex, dashed] (8,-1) -- (8,0);\draw [->, >=latex, dashed] (8,-1) -- (8.8,-0.2);\draw (8,0.4) node[]{$y$};\draw (9.1,0.2) node[]{$z$};
-      \faceside{5}{5}{5}{20}{0}{state}\draw [->, >=latex, dashed] (18,-1) -- (19,-1);\draw [->, >=latex, dashed] (18,-1) -- (18,0);\draw [->, >=latex, dashed] (18,-1) -- (18.8,-0.2);\draw (19.4,-1) node[]{$x$};\draw (18,0.4) node[]{$y$};\draw (19.1,0.2) node[]{$z$};
+      \faceside{1}{5}{2}{10}{0}{sheet}\draw [->, >=latex, dashed] (8,-1) -- (8,0);\draw [->, >=latex, dashed] (8,-1) -- (8.8,-0.2);\draw (8,0.4) node[]{$y$};\draw (9.1,0.2) node[]{$z$};
+      \faceside{5}{5}{2}{20}{0}{state}\draw [->, >=latex, dashed] (18,-1) -- (19,-1);\draw [->, >=latex, dashed] (18,-1) -- (18,0);\draw [->, >=latex, dashed] (18,-1) -- (18.8,-0.2);\draw (19.4,-1) node[]{$x$};\draw (18,0.4) node[]{$y$};\draw (19.1,0.2) node[]{$z$};
       
     
     \end{tikzpicture}
@@ -185,7 +185,7 @@ $2^6$ & $6$ & $24$ & $1600 $
 \textbf{Taille des condensés:}
 \begin{itemize}
 \item{Fonctions de hachage: 224, 256, 384 et 512 bits}
-\item{Fonctions à sortie de taille variable: \textsc{SHAKE128}$(M,l)$ et \textsc{SHAKE128}$(M,l)$  pour une capacity de 256 bits, et une sortie de longueur $l$) }
+\item{Fonctions à sortie de taille variable: \textsc{SHAKE128}$(M,l)$ et \textsc{SHAKE128}$(M,l)$  pour une capacité de 256 bits, et une sortie de longueur $l$ }
 \end{itemize}
 \vspace{1cm}
 \vfill

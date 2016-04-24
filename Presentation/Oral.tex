@@ -57,7 +57,14 @@ La particularité de cette nouvelle famille est qu’elle repose sur des princip
 
 \chapter{INTRODUCTION}
 \section{Qu’est-ce qu’une fonction de hachage}
-Une fonction de hachage prend en entrée un message de taille quelconque, applique une série de transformations et réduit ces données. On obtient à la sortie une chaîne de caractères hexadécimaux, le condensé, ou haché, qui résume en quelque sorte le fichier. 
+Une fonction de hachage est un algorithme permettant de calculer une empreinte de taille fixe à partir d’une donnée de taille quelconque.
+
+On obtient à la sortie une chaîne de caractères hexadécimaux, l'empreinte, qui résume en quelque sorte le fichier. 
+
+A l’origine, les fonctions de hachage ont été créés pour faciliter la gestion de base de données. Plutôt que de manipuler des données de taille variable et potentiellement grande, on associe à ces données une empreinte de taille fixe, 
+sur lesquelles des comparaisons sont plus rapides à effectuer. L’utilisation de fonctions de hachage permet par conséquent d’accélerer des opérations comme le tri, l’insertion ou l’accès à un élément.
+
+Une fonction de hachage prend en entrée un message de taille quelconque, applique une série de transformations et réduit ces données. 
 
 Cette sortie a une taille fixe qui varie selon les algorithmes (128 bits pour MD5 et 160 bits pour SHA-1). 
 
@@ -83,6 +90,10 @@ L’approche traditionnelle pour construire des fonctions de Hachage a été de 
 
 \chapter{ATTAQUES}
 \section{Attaque par force brute: l’attaque des anniversaires}
+La meilleure attaque générique en recherche de collisions repose sur le paradoxe des anniversaires. Cette expression désigne une propriété contre-intuitive : parmi un groupe d’au moins 23 personnes prises au hasard, il y a au moins une chance sur deux pour que deux d’entre elles aient leur anniversaire le même jour. 
+
+Le calcul de hachés de messages aléatoires correspond à un tirage aléatoire sur l’espace des empreintes , de taille $2^n$. D’après le raisonnement précédent, le nombre de hachés qu’il faut calculer pour trouver une collision est de l’ordre de $\sqrt{2^n} = 2^{n/2}$
+
 Si l'on suppose que l'ensemble de messages $\mathcal{E}$ est choisi de façon aléatoire et uniforme parmi tous les messages possibles, on peut montrer que le nombre de messages à tester afin d'avoir une probabilité donnée de trouver des collisions ne dépend que de la taille des condensés.
 
 Ainsi, afin d'avoir une probabilité supérieure à $50\%$ de trouver des collisions, il suffit de tester aléatoirement peu plus de $\sqrt{N}$ messages.
@@ -164,8 +175,17 @@ Décalage circulaire des rangées (ou mots) de l'état.}
 \item{$\iota$:
 Calculer le ou exclusif d’une constante avec un mot de l’état, qui dépend du numéro de l’itération $i_r$:}
 
-
+\section{SHA-3}
   Processeur de $64$ bits $\Rightarrow$ choix naturel $w=64$.
 \end{itemize}
-\section{SHA-3}
+\chapter{Conclusion}
+
+Ainsi, dû à des avancées majeures dans le domaine de la cryptanalyse des algorithmes de hachage basés sur la construction de Merkle-Dam\r{a}rd dans la dernière décennie, il a été nécessaire de s'éloigner de cette brique de base sur laquelle reposaient tous les algorithme de hachages cryptographiques standardisés.
+
+Cette perspective a ainsi mené à la mise au point d'une nouvelle norme, la famille SHA-3, qui ne repose non plus sur une fonction de compression, mais sur une construction en éponge, qui itère une permutation de taille fixe. Du fait de son modèle distinct, les attaques affectant le modèle de Merkle-Damg\r{a}rd ne sont pas efficace contre SHA-3. Elle présente de plus l'avantage de pouvoir choisir la taille des empreintes produites. 
+
+Cependant, il existe des modification mineurs, qui sont facilement implémentables en pratique, qui permettent également de palier aux défauts de la structure de Merkle-Damg\r{a}rd.
+
+Ainsi il pourrai paraître risqué de se lancer directement dans une implémentation majeure de SHA3 pour des protocoles de sécurité déployés à grande échelle.
+En effet la construction en éponge est encore très jeune, il est fort possible qu'il existe des faiblesses importantes pour SH3 auxquelles nous n'avons tout simplement pas encore pensé.
 \end{document}
