@@ -9,7 +9,9 @@
   \frametitle{Etat d'une fonction en éponge}
   \vfill
   \begin{itemize}
-  \item $S$: l'état (state) de la fonction $S = R \vert \vert C$.
+  \item $ R \vert \vert C$: État de la fonction.
+  \item $r$: tailles des blocs $M_i$ traités.
+  \item $c$: capacité.
     \item $R$: partie externe de l'état, les premier $r$ bits de l'état.
   \item $C$: partie interne de l'état, de taille $c=b-r$ bits.
   \end{itemize}
@@ -172,7 +174,7 @@ $2^6$ & $6$ & $24$ & $1600 $
 \textbf{Taille des condensés:}
 \begin{itemize}
 \item{Fonctions de hachage: 224, 256, 384 et 512 bits}
-\item{Fonctions à sortie de taille variable: \textsc{SHAKE128}$(M,l)$ et \textsc{SHAKE128}$(M,l)$  pour une capacité de 256 bits, et une sortie de longueur $l$ }
+\item{Fonctions à sortie de taille variable: \textsc{SHAKE128}$(M,l)$ et \textsc{SHAKE256}$(M,l)$  pour des capacités de 128 et 256 bits, et une sortie de longueur $l$ }
 \end{itemize}
 \vspace{1cm}
 \vfill

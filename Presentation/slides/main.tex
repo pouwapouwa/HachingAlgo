@@ -136,7 +136,7 @@
   \frametitle{Padding}
   \vfill
   \begin{itemize}
-  \item \textbf{Merkle-Damg\r{a}rd Padding}: Représenté par $10*1|M|$, il faut rajouter un $1$, puis un nombre fini de $0$, de telle sorte que la longueur du resultat soit congru à $448$ mod $512$. Ensuite, on y ajoute la longueur du message, sur $64$ bits.
+  \item \textbf{Merkle-Damg\r{a}rd Padding}: Représenté par $10*|M|$, il faut rajouter un $1$, puis un nombre fini de $0$, de telle sorte que la longueur du resultat soit congru à $448$ mod $512$. Ensuite, on y ajoute la longueur du message, sur $64$ bits.
   \end{itemize}
   \vfill
   \begin{figure}[H]
@@ -232,7 +232,7 @@
   \end{figure}
 
   \begin{itemize}
-        \item{\textbf{Théorème:} Si la fonction de compression $h$ utilisée par la fonction de hachage $H$ l'est aussi.} 
+        \item{\textbf{Théorème:} Si la fonction de compression $h$ utilisée par la fonction de hachage $H$ est résistante aux collisions, alors $H$ l'est aussi.} 
   \end{itemize}
   \vfill
 \end{frame}
