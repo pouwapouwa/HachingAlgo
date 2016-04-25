@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%[ Introduction ]%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[fragile]
-  \frametitle{Définition: fonction de hashage}
+  \frametitle{Définition: fonction de hachage}
   \vfill
 
 \centerline{H:$\{0,1\}^* \rightarrow \{0,1\}^n$}
@@ -102,7 +102,7 @@
   \frametitle{Propriétés requises}  
   \vfill
           \begin{itemize}
-          \item \textbf{Résistance à la Pré-image}: Pour un hash $y$ donné, il est dur de trouver une pré-image $x \in f^{-1}(H)$ tel que $y = H(x)$.
+          \item \textbf{Résistance à la Pré-image}: Pour une empreinte $y$ donné, il est dur de trouver une pré-image $x \in f^{-1}(H)$ tel que $y = H(x)$.
           \item \textbf{Résistance à la Seconde Pré-image}: Pour un clair $x$, il est dur de trouver un autre clair $x',\ x'\neq x$ tel que $H(x) = H(x')$.
           \item \textbf{Résistance aux Collisions}: Il est dur de trouver 2 messages clairs $x$ et $x'$ avec $x \neq x'$ tel que $H(x) = H(x')$.
           \end{itemize}
@@ -344,16 +344,16 @@ $$P_{Success} > 50\% \mbox{ pour } 2^{80} \mbox{ calculs de condensés.}$$
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Fonctions de hachage cassée}
+  \frametitle{Fonctions de hachage cassées}
   \vfill
 \textbf{Définition}:\\
-Une fonction de hashage est dite \emph{cassée} lorsqu'il existe une attaque connue permettant de trouver des collisions ayant une complexité moindre que l'attaque par force brute.
+Une fonction de hachage est dite \emph{cassée} lorsqu'il existe une attaque connue permettant de trouver des collisions ayant une complexité moindre que l'attaque par force brute.
   \vspace{1.5cm}
   
 \textbf{État actuel}:\\
 \begin{itemize}
 \item{La \emph{cryptanalyse différentielle} a cassé de nombreuses fonctions de hachage itérées, basées sur Merkle-Damg\r{a}rd (dont SHA0, SHA1, MD5).}
-\item{Des attaques génériques de Merkle-Damg\r{a}rd existent. }
+\item{Des attaques génériques contre Merkle-Damg\r{a}rd existent. }
 \end{itemize}
   \vfill
 \end{frame}
