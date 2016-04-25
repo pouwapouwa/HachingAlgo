@@ -240,8 +240,8 @@
 \begin{frame}[fragile]
   \frametitle{Applications}
   \begin{itemize}
-  \item{MD5}
-  \item{SHA1} 
+  \item{MD5:$\{0,1\}^* \rightarrow \{0,1\}^{128}$}
+  \item{SHA1:$\{0,1\}^* \rightarrow \{0,1\}^{160}$} 
   \end{itemize}
 
   \begin{figure}[!ht]
@@ -279,12 +279,12 @@
         \draw (2.25,5.59) arc(45:-45:0.15cm);\draw (2.25,4.1) arc(45:-45:0.15cm);\draw (1.5,4.1) arc(45:-45:0.15cm);\draw (3.75,4.1) arc(45:-45:0.15cm);\draw (3.75,5.085) arc(45:-45:0.15cm);
 
         \end{tikzpicture}
-        \caption{\label{fig:SHA-1}The $i^{th}$ round in SHA-1 $(0\le i \le 79)$.}
+        \caption{\label{fig:SHA-1}Le $i^{ème}$ tour de la fonction de compression de SHA-1 $(0\le i \le 79)$.}
 \end{figure}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Faiblesse de Merkle-Damg\r{a}rd}
+\section{Attaques contre Merkle-Damg\r{a}rd}
 
 \begin{frame}<handout:0>
   \frametitle{Plan}
